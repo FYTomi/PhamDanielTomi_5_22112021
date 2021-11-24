@@ -26,3 +26,7 @@ fetch('http://localhost:3000/api/products')
         displayProductInfo(data);
     }
     )
+    .catch(function(err) {
+        console.log ("Impossible d'afficher les article");
+    }
+    )
