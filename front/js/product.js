@@ -18,22 +18,26 @@ fetch('http://localhost:3000/api/products')
 let foundProduct = findProduct()
 
 //Déclaration d'une variable qui a pour fonction de sélectionner les éléments du DOM à modifier
+    //1 - Selection dans le DOM
+    //2 - Insertion des variables des détails du produit dans le DOM selectionné
 
 let selectDomElements = () => {
     let productName = document.getElementsByTagName ('title')
-    let image = document.querySelector('.item__img')
-    let productTitle = document.getElementById('title')
-    let productPrice = document.getElementById('price')
-    let productDescription = document.getElementById('description')
-    let productColors = document.getElementById('colors')
-
-    //Insertion des variables des détails du produit dans le DOM
-    
     productName[0].innerHTML = foundProduct.name
+
+    let image = document.querySelector('.item__img')
     image.innerHTML = `<img src="${foundProduct.imageUrl}" alt="${foundProduct.altTxt}">`
+    
+    let productTitle = document.getElementById('title')
     productTitle.innerHTML = foundProduct.name
+
+    let productPrice = document.getElementById('price')
     productPrice.innerHTML = foundProduct.price
+
+    let productDescription = document.getElementById('description')
     productDescription.innerHTML = foundProduct.description
+
+    let productColors = document.getElementById('colors')
     for (let c in foundProduct.colors) {
         colors.insertAdjacentHTML  ('beforeend', `<option value="${foundProduct.colors[c]}">${foundProduct.colors[c]}</option>`
             )
@@ -41,4 +45,5 @@ let selectDomElements = () => {
     }
 
     selectDomElements()
-    })
+    }
+    )
