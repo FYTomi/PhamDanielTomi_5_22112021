@@ -10,7 +10,7 @@ fetch('http://localhost:3000/api/products')
     .then((res) => res.json())
     .then ((data) => {
         let findProduct = () => {
-            return data.find((object) => {object._id === idProduit})
+            return data.find((object) => object._id === idProduit)
         }
     
 //Déclaration de la variable qui contient le résultat de la fonction requête
@@ -21,12 +21,24 @@ let foundProduct = findProduct()
 
 let selectDomElements = () => {
     let productName = document.getElementsByTagName ('title')
-    let image = document.getElementsByClassName ('item__img')
-    let productTitle = document.getElementById ('title')
-    let productDescription = document.getElementById ('description')
-    let productColors = document.getElementById ('colors')
+    let image = document.querySelector('.item__img')
+    let productTitle = document.getElementById('title')
+    let productPrice = document.getElementById('price')
+    let productDescription = document.getElementById('description')
+    let productColors = document.getElementById('colors')
 
     //Insertion des variables des détails du produit dans le DOM
     
-}
+    productName[0].innerHTML = foundProduct.name
+    image.innerHTML = `<img src="${foundProduct.imageUrl}" alt="${foundProduct.altTxt}">`
+    productTitle.innerHTML = foundProduct.name
+    productPrice.innerHTML = foundProduct.price
+    productDescription.innerHTML = foundProduct.description
+    for (let c in foundProduct.colors) {
+        colors.insertAdjacentHTML  ('beforeend', `<option value="${foundProduct.colors[c]}">${foundProduct.colors[c]}</option>`
+            )
+        }
+    }
+
+    selectDomElements()
     })
