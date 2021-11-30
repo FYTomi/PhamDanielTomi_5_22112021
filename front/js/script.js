@@ -17,16 +17,16 @@ let displayProductInfo = function(data) {
 // Requête API pour le JSON des produits à afficher
 
 fetch('http://localhost:3000/api/products')
-  .then(function(res) {
+  .then((res) => {
       if (res.ok) {
           return res.json();
       }
     })
-    .then (function(data) {
+    .then ((data) => {
         displayProductInfo(data);
     }
     )
-    .catch(function(err) {
-        console.log ("Impossible d'afficher les article");
+    .catch((err) => {
+        console.log ("Impossible d'afficher les articles");
     }
     )
