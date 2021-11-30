@@ -17,3 +17,13 @@ fetch('http://localhost:3000/api/products')
             return data.find(function(object) {object._id === idProduit})
         }
     })
+
+//Déclaration d'une variable qui a pour fonction de sélectionner les éléments du DOM à modifier
+
+let selectDomElements = function () {
+    let productName = document.getElementsByTagName ('title')
+    let image = document.getElementsByClassName ('item__img')
+    let productTitle = document.getElementById ('title')
+    let productDescription = document.getElementById ('description')
+    let productColors = document.getElementById ('colors')
+}
