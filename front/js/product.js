@@ -22,8 +22,8 @@ let foundProduct = findProduct()
     //2 - Insertion des variables des détails du produit dans le DOM selectionné
 
 let selectDomElements = () => {
-    let productName = document.getElementsByTagName ('title')
-    productName[0].innerHTML = foundProduct.name
+/* 1 */ let productName = document.getElementsByTagName ('title')
+/* 2 */productName[0].innerHTML = foundProduct.name
 
     let image = document.querySelector('.item__img')
     image.innerHTML = `<img src="${foundProduct.imageUrl}" alt="${foundProduct.altTxt}">`
