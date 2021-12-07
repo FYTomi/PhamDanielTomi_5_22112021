@@ -6,11 +6,12 @@ let idProduit = new URL (window.location.href).searchParams.get('id')
 
 //Requête API pour le JSON des produits à afficher et s'assurer que l'ID du produit récupéré correspond à la variable idProduit
 
-fetch('http://localhost:3000/api/products')
+fetch('http://localhost:3000/api/products/'+idProduit)
     .then((res) => res.json())
     .then ((data) => {
+        console.log(data)
         let findProduct = () => {
-            return data.find((object) => object._id === idProduit)
+            return data//.find((object) => object._id === idProduit)
         }
     
 //Déclaration de la variable qui contient le résultat de la fonction requête
@@ -23,7 +24,7 @@ let foundProduct = findProduct()
 
 let selectDomElements = () => {
 /* 1 */ let productName = document.getElementsByTagName ('title')
-/* 2 */productName[0].innerHTML = foundProduct.name
+/* 2 */ productName[0].innerHTML = foundProduct.name
 
     let image = document.querySelector('.item__img')
     image.innerHTML = `<img src="${foundProduct.imageUrl}" alt="${foundProduct.altTxt}">`
@@ -43,7 +44,12 @@ let selectDomElements = () => {
             )
         }
     }
-
+//commentaire 
+    let  addToCartButton = document.getElementById('addToCart')
+addToCartButton.setAttribute('data-productID', foundProduct._id)
     selectDomElements()
+
+
     }
     )
+
