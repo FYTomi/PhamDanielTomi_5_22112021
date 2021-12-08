@@ -77,6 +77,11 @@ let modifyProductInLocalStorage = (q) =>  {
     )
     productOptionChoices.quantity = parseInt(productOptionChoices.quantity)
 }
+//événement au clic du bouton "Ajouter au Panier"
+let sendToCart = document.getElementById('addToCart')
+sendToCart.addEventListener('click', (event) => {
+    createNewProduct()
+})
 
 }
 
