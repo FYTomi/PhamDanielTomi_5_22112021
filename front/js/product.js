@@ -11,7 +11,7 @@ fetch('http://localhost:3000/api/products/'+idProduit)
     .then ((data) => {
         console.log(data)
         let findProduct = () => {
-            return data//.find((object) => object._id === idProduit)
+            return data
         }
     
 //Déclaration de la variable qui contient le résultat de la fonction requête
@@ -52,36 +52,55 @@ let selectDomElements = () => {
 
     }
     )
-
-// Ajout d'un nouveau produit 
-let createNewProduct = () => {
-    let quantity = document.getElementById('quantity')
-    let saveProductToLocalStorage =  JSON.parse(localStorage.getItem('product'))
+   
+    // selection bouton "ajouter au panier"
     
-    let productOptionChoices = {
-        _id: idProduit,
-        quantity: quantity.value,
-        colors: colors.value,
+    const addCart =document.getElementById('addToCart')
+
+    //-------------------------------------addEvent - Ecouter le bouton "ajouter au panier" ------------------------------------
+    
+    addCart.addEventListener("click", (event) => {
+
+        let productColors = document.querySelector('#colors')
+        let quantity = document.querySelector('#quantity')
+    
+        // Ajout d'un nouveau produit 
+        let productOptionChoices = {
+            _id: idProduit,
+            quantity: quantity.value,
+            colors: productColors.value,
+        }
+
+    //-------------------------------------Local storage---------------------------------------------------------------------
+
+        //fonction pop up à 'lajout d'un article
+
+        const popUpConfirmation = () => {
+            let productTitle = document.getElementById('title')
+            if (window.confirm(`${productTitle} a bien été ajouté au panier Pour consulter le panier appuyer sur  OK ou pour revenir à l'accueil ANNULER`)) {
+                window.location.href = "cart.html";
+            } else {
+                window.location.href = "index.html";
+            }
+        }
+
+    let saveProductToLocalStorage = JSON.parse(localStorage.getItem ("produit"));
+    
+    //JSON.parse c'est pour convertir les données au format JSON qui sont dans le local storage en objet JavaScript
+    
+    console.log(saveProductToLocalStorage)
+    
+    //s'il y a deja des produit enregistré dans le local storage
+    if (saveProductToLocalStorage) {
+        console.log("Des produits sont dans le local storage")
+        popUpConfirmation();
     }
-
-// Ajoute un produit dans localStorage
-let addProductToLocalStorage = () => {
-    saveProductToLocalStorage.push(productOptionChoices)
-    localStorage.setItem('product', JSON.stringify(addProductToLocalStorage))
-}
-
-// Modifie le produit dans le localStorage
-let modifyProductInLocalStorage = (q) =>  {
-    saveProductToLocalStorage[q].quantity = parseInt(
-        saveProductToLocalStorage[q].quantity
-    )
-    productOptionChoices.quantity = parseInt(productOptionChoices.quantity)
-}
-//événement au clic du bouton "Ajouter au Panier"
-let sendToCart = document.getElementById('addToCart')
-sendToCart.addEventListener('click', (event) => {
-    createNewProduct()
-})
-
-}
-
+    //s'il n'y a deja des produit enregistré dans le local storage
+    else {
+        saveProductToLocalStorage = [];
+        saveProductToLocalStorage.push(productOptionChoices);
+        console.log(saveProductToLocalStorage);
+        localStorage.setItem("produit", JSON.stringify(saveProductToLocalStorage));
+        popUpConfirmation();
+    }
+    })
