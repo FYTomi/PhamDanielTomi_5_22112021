@@ -45,11 +45,38 @@ let selectDomElements = () => {
         }
     }
 //commentaire 
-    let  addToCartButton = document.getElementById('addToCart')
-addToCartButton.setAttribute('data-productID', foundProduct._id)
-    selectDomElements()
+    //let  addToCartButton = document.getElementById('addToCart')
+//addToCartButton.setAttribute('data-productID', foundProduct._id)
+    selectDomElements() 
 
 
     }
     )
+
+// Ajout d'un nouveau produit 
+let createNewProduct = () => {
+    let quantity = document.getElementById('quantity')
+    let saveProductToLocalStorage =  JSON.parse(localStorage.getItem('product'))
+    
+    let productOptionChoices = {
+        _id: idProduit,
+        quantity: quantity.value,
+        colors: colors.value,
+    }
+
+// Ajoute un produit dans localStorage
+let addProductToLocalStorage = () => {
+    saveProductToLocalStorage.push(productOptionChoices)
+    localStorage.setItem('product', JSON.stringify(addProductToLocalStorage))
+}
+
+// Modifie le produit dans le localStorage
+let modifyProductInLocalStorage = (q) =>  {
+    saveProductToLocalStorage[q].quantity = parseInt(
+        saveProductToLocalStorage[q].quantity
+    )
+    productOptionChoices.quantity = parseInt(productOptionChoices.quantity)
+}
+
+}
 
