@@ -60,22 +60,19 @@ let selectDomElements = () => {
     //-------------------------------------addEvent - Ecouter le bouton "ajouter au panier" ------------------------------------
     
     addCart.addEventListener("click", (event) => {
-
-        let productColors = document.querySelector('#colors')
-        let quantity = document.querySelector('#quantity')
     
         // Ajout d'un nouveau produit 
         let productOptionChoices = {
             _id: idProduit,
             quantity: quantity.value,
-            colors: productColors.value,
+            colors: colors.value,
         }
 
     //-------------------------------------Local storage---------------------------------------------------------------------
 
         //fonction pop up à 'lajout d'un article
 
-        const popUpConfirmation = () => {
+       const popUpConfirmation = () => {
             let productTitle = document.getElementById('title')
             if (window.confirm(`${productTitle} a bien été ajouté au panier Pour consulter le panier appuyer sur  OK ou pour revenir à l'accueil ANNULER`)) {
                 window.location.href = "cart.html";
@@ -93,7 +90,7 @@ let selectDomElements = () => {
     //s'il y a deja des produit enregistré dans le local storage
     if (saveProductToLocalStorage) {
         console.log("Des produits sont dans le local storage")
-        popUpConfirmation();
+       // popUpConfirmation();
     }
     //s'il n'y a deja des produit enregistré dans le local storage
     else {
@@ -101,6 +98,6 @@ let selectDomElements = () => {
         saveProductToLocalStorage.push(productOptionChoices);
         console.log(saveProductToLocalStorage);
         localStorage.setItem("produit", JSON.stringify(saveProductToLocalStorage));
-        popUpConfirmation();
+        //popUpConfirmation();
     }
     })
