@@ -65,8 +65,11 @@ envoyerPanier.addEventListener("click", (event)=> {
 // Fonction ajouté un produit dans le local Storage
 
 const ajoutProduitLocalStorage = () => {
+
     // Ajout dans le tableau de l'objet avec les valeurs choisi par l'utilisateur
     produitEnregistreDansLocalStorage.push(productOptionChoices);
+
+    //La transformation en format JSON et l'envoyer dans la key "produit" du localStorage
     localStorage.setItem ("produit", JSON.stringify(produitEnregistreDansLocalStorage));
 }
 
@@ -88,7 +91,7 @@ let productOptionChoices = {
     quantity: quantity.value,
     colors: colors.value,
 }
-
+//Déclaration de la variable "produitEnregistreDansLocalStorage" dans laquelle on met les keys et les values dans le localStorage
 let produitEnregistreDansLocalStorage = JSON.parse(localStorage.getItem("produit"));
 //JSON.parse c'est pour convertir les données au format JSON ui sont dans le localStorage en objet JS
 console.log(produitEnregistreDansLocalStorage);
