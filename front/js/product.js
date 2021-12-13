@@ -38,7 +38,7 @@ let selectDomElements = () => {
     let productDescription = document.getElementById('description')
     productDescription.innerHTML = foundProduct.description
 
-    let productColors = document.getElementById('colors')
+    let colors = document.getElementById('colors')
     for (let c in foundProduct.colors) {
         colors.insertAdjacentHTML  ('beforeend', `<option value="${foundProduct.colors[c]}">${foundProduct.colors[c]}</option>`
             )
@@ -61,6 +61,8 @@ let selectDomElements = () => {
     
     addCart.addEventListener("click", (event) => {
     
+        let quantity = document.querySelector('#quantity')
+        
         // Ajout d'un nouveau produit 
         let productOptionChoices = {
             _id: idProduit,
@@ -68,36 +70,51 @@ let selectDomElements = () => {
             colors: colors.value,
         }
 
-    //-------------------------------------Local storage---------------------------------------------------------------------
-
         //fonction pop up à 'lajout d'un article
 
        const popUpConfirmation = () => {
-            let productTitle = document.getElementById('title')
-            if (window.confirm(`${productTitle} a bien été ajouté au panier Pour consulter le panier appuyer sur  OK ou pour revenir à l'accueil ANNULER`)) {
-                window.location.href = "cart.html";
-            } else {
-                window.location.href = "index.html";
-            }
+        let productTitle = document.getElementById('title')
+        if (window.confirm(`"${productTitle.innerHTML}" a bien été ajouté au panier, pour consulter le panier appuyer sur  OK `)) {
+            window.location.href = "cart.html";
+        }
+    }
+
+        //-------------------------------------Local storage---------------------------------------------------------------------
+
+        // Variable qui récuprère le produit dans le local storage
+        let savedProductInLocalStorage = JSON.parse(localStorage.getItem('product'))
+        
+        // Ajoute le produit au local storage
+
+        let saveProductToLocalStorage = () => {
+        savedProductInLocalStorage.push(productOptionChoices)
+        localStorage.setItem('product', JSON.stringify(savedProductInLocalStorage))
+    }
+
+        // Modifie le produit dans le local storage
+
+        let modififyProductLocalStorage = (index) => {
+            savedProductInLocalStorage[index].quantity = parseInt(savedProductInLocalStorage[index].quantity)
         }
 
-    let saveProductToLocalStorage = JSON.parse(localStorage.getItem ("produit"));
-    
-    //JSON.parse c'est pour convertir les données au format JSON qui sont dans le local storage en objet JavaScript
-    
-    console.log(saveProductToLocalStorage)
-    
-    //s'il y a deja des produit enregistré dans le local storage
-    if (saveProductToLocalStorage) {
-        console.log("Des produits sont dans le local storage")
-       // popUpConfirmation();
-    }
-    //s'il n'y a deja des produit enregistré dans le local storage
-    else {
-        saveProductToLocalStorage = [];
-        saveProductToLocalStorage.push(productOptionChoices);
-        console.log(saveProductToLocalStorage);
-        localStorage.setItem("produit", JSON.stringify(saveProductToLocalStorage));
-        //popUpConfirmation();
-    }
+        productOptionChoices.quantity = parseInt(productOptionChoices.quantity)
+
+        // Variable qui ajout le montant de produit selectionné au montant des produit dans le local storage
+
+        let addToTotal = productOptionChoices.quantity + savedProductInLocalStorage[index].quantity
+
+        // Si l'utilisateur dépasse 100 articles
+
+        if (addToTotal > 100) {
+            console.log('Le panier dépasse 100 artciles')
+        }
+        //Ajoute la quantité au montant existant
+        else {
+            productOptionChoices.quantity  += savedProductInLocalStorage[index].quantity
+            localStorage.setItem('product', JSON.stringify(savedProductInLocalStorage))
+            console.log('Ajout')
+        }
+
+
+
     })
