@@ -70,16 +70,7 @@ let selectDomElements = () => {
             colors: colors.value,
         }
 
-        //fonction pop up à 'lajout d'un article
-
-       const popUpConfirmation = () => {
-        let productTitle = document.getElementById('title')
-        if (window.confirm(`"${productTitle.innerHTML}" a bien été ajouté au panier, pour consulter le panier appuyer sur  OK `)) {
-            window.location.href = "cart.html";
-        }
-    }
-
-        //-------------------------------------Local storage---------------------------------------------------------------------
+    //-------------------------------------Local storage---------------------------------------------------------------------
 
         // Variable qui récuprère le produit dans le local storage
         let savedProductInLocalStorage = JSON.parse(localStorage.getItem('product'))
@@ -95,7 +86,7 @@ let selectDomElements = () => {
 
         let modififyProductLocalStorage = (index) => {
             savedProductInLocalStorage[index].quantity = parseInt(savedProductInLocalStorage[index].quantity)
-        }
+        
 
         productOptionChoices.quantity = parseInt(productOptionChoices.quantity)
 
@@ -107,14 +98,43 @@ let selectDomElements = () => {
 
         if (addToTotal > 100) {
             console.log('Le panier dépasse 100 artciles')
+            reachedProductLimit()
         }
         //Ajoute la quantité au montant existant
         else {
             productOptionChoices.quantity  += savedProductInLocalStorage[index].quantity
             localStorage.setItem('product', JSON.stringify(savedProductInLocalStorage))
             console.log('Ajout')
+            popUpConfirmation()
         }
+    }
 
+    //fonctions qui affiche un popup/message selon ce que l'utilisateur effectue à l'ajout d'un article
+        
+        //Selection de l'élément pour afficher 
+        let notification = document.getElementsByClassName('item__content__addButton')
+       
+        //Si l'utilisateur ajoute un article au panier
+        const popUpConfirmation = () => {
+        let productTitle = document.getElementById('title')
+        if (window.confirm(`"${productTitle.innerHTML}" a bien été ajouté au panier, pour consulter le panier appuyer sur  OK `)) {
+            window.location.href = "cart.html";
+        }
+        }
+        //Si le nombre d'artcile dépasse 100
+        let reachedProductLimit = () => {
+        (window.confirm(`Vous ne pouvez pas dépasser 100 articles`)) 
+        }
+        // Si l'utilisateur ne renseigne certaines informations concernant l'article
+        let errorMessage = () => {
+        if (productOptionChoices.colors == '') {
+            notification.insertAdjacentHTML(
+                'afterend',
+                `<span id ="notif" style="text-align: center; font-weight: bold;"><br>Veuillez choisir une couleur !</span>`
+            )
+        }
+    }
+        
 
 
     })
