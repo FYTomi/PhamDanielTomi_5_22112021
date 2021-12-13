@@ -50,18 +50,15 @@ let selectDomElements = () => {
     selectDomElements() 
 
 
-    }
-    )
+    })
    
-    // selection bouton "ajouter au panier"
-    
-    const addCart =document.getElementById('addToCart')
 
-    //-------------------------------------addEvent - Ecouter le bouton "ajouter au panier" ------------------------------------
+
+    // -----------------------------------------------------------IMPORTANT Fonction ajoutant un article -------------------------------------------------
     
-    addCart.addEventListener("click", (event) => {
+    let addProduct = () => {
     
-        let quantity = document.querySelector('#quantity')
+        let quantity = document.getElementById('quantity')
         
         // Ajout d'un nouveau produit 
         let productOptionChoices = {
@@ -97,7 +94,7 @@ let selectDomElements = () => {
         // Si l'utilisateur dépasse 100 articles
 
         if (addToTotal > 100) {
-            console.log('Le panier dépasse 100 artciles')
+            console.log('Le panier dépasse 100 articles')
             reachedProductLimit()
         }
         //Ajoute la quantité au montant existant
@@ -105,36 +102,103 @@ let selectDomElements = () => {
             productOptionChoices.quantity  += savedProductInLocalStorage[index].quantity
             localStorage.setItem('product', JSON.stringify(savedProductInLocalStorage))
             console.log('Ajout')
-            popUpConfirmation()
         }
     }
 
-    //fonctions qui affiche un popup/message selon ce que l'utilisateur effectue à l'ajout d'un article
+    //fonctions qui affiche un message selon ce que l'utilisateur effectue à l'ajout d'un article
         
-        //Selection de l'élément pour afficher 
+        //Selection de l'élément pour afficher le popup/message
+        
         let notification = document.getElementsByClassName('item__content__addButton')
        
-        //Si l'utilisateur ajoute un article au panier
-        const popUpConfirmation = () => {
-        let productTitle = document.getElementById('title')
-        if (window.confirm(`"${productTitle.innerHTML}" a bien été ajouté au panier, pour consulter le panier appuyer sur  OK `)) {
-            window.location.href = "cart.html";
+        //fonction avec un délai pour faire disparaître la notification
+
+        let deleteNotif = () => {
+            let deleteNotif = document.getElementById('notification')
+            setTimeout(function () {
+                deleteNotif.remove()
+            }, 2000)
+            }
+        
+            let notifAjout = () => {
+            notification.insertAdjacentHTML(
+                'afterend',
+                `<p id ="notification" style="text-align: center; font-weight: bold;"><br>L'article a été ajouté !</p>`
+            )
+            deleteNotif()
         }
-        }
-        //Si le nombre d'artcile dépasse 100
+        
+        //Si le nombre d'article dépasse 100
+        
         let reachedProductLimit = () => {
-        (window.confirm(`Vous ne pouvez pas dépasser 100 articles`)) 
+        notification.insertAdjacentHTML(
+            'afterend',
+                `<p id ="notification" style="text-align: center; font-weight: bold;"><br>Votre panier dépasse 100 artciles !</p>`
+            )
+            deleteNotif()
         }
         // Si l'utilisateur ne renseigne certaines informations concernant l'article
+        
         let errorMessage = () => {
         if (productOptionChoices.colors == '') {
             notification.insertAdjacentHTML(
                 'afterend',
-                `<span id ="notif" style="text-align: center; font-weight: bold;"><br>Veuillez choisir une couleur !</span>`
+                `<p id ="notification" style="text-align: center; font-weight: bold;"><br>Veuillez choisir une couleur !</p>`
             )
+            deleteNotif()
         }
-    }
+        if (productOptionChoices.quantity <= 0) {
+            notification.insertAdjacentHTML(
+                'afterend',
+                `<p id ="notification" style="text-align: center; font-weight: bold;"><br>Veuillez choisir une quantité !</p>`
+            )
+            deleteNotif()
+        }
+
+        //Si l'utilisateur ne renseigne pas un des des deux éléments (couleurs OU quantité)
+
+        if (
+            productOptionChoices.colors == '' || productOptionChoices.quantity <= 0 || productOptionChoices.quantity > 100
+        ){
+            errorMessage()
+            console.log ('Impossible de poursuivre les achats')
+        }
+        else {
+            // Si il n'y a pas de produit dans le local storage
+            // Création d'un array pour y ajouter le produit
+            if (!savedProductInLocalStorage) {
+                savedProductInLocalStorage = []
+                //Ajout du produit dans l'array
+                saveProductToLocalStorage()
+                console.log('Premier produit  ajouté')
+            }
+            //déclaration de la variable index dans le local storage qui a la même couleur et ID que l'utilisateur a séléctionné
+            else {
+                let index = savedProductInLocalStorage.findIndex(
+                    (p) => p.colors === productOptionChoices.colors && p._id === productOptionChoices._id
+                )
+            //Si le produit existe déjà alors appel de la fonction "modififyProductLocalStorage"
+            if (index !== -1) {
+                modififyProductLocalStorage(index)
+            }
+            // Ajout le produit dans le cas contraire
+            else {
+                saveProductToLocalStorage()
+                console.log('Produit ajouté')
+            }
+            }
+        }
+        }
         
 
 
+        
+    }
+
+    //-------------------------------------addEvent - Ecouter le bouton "ajouter au panier" ------------------------------------
+    
+    // selection bouton "ajouter au panier"
+    let addCart = document.getElementById('addToCart')
+    addCart.addEventListener("click", (event) => { 
+        addProduct()
     })
