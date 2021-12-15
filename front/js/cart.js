@@ -40,12 +40,12 @@ else {
         console.log("Nombre d'article " +  produitEnregistreDansLocalStorage.length);
         
         //Calcul du prix , quantité * nombre de produit
-        let calculPrixProduit = parseInt(produitEnregistreDansLocalStorage[k].quantity) * (foundProduct.price)
+        let calculPrixProduit = parseInt(produitEnregistreDansLocalStorage.quantity) * (foundProduct.price)
 
         structureProduitPanier = structureProduitPanier + `
-        <article class="cart__item" data-id="${foundProduct.name}" data-color="${produitEnregistreDansLocalStorage[k]}">
+        <article class="cart__item" data-id="${foundProduct[k].name}" data-color="${produitEnregistreDansLocalStorage[k]}">
                 <div class="cart__item__img">
-                  <img src="${foundProduct.imageUrl}" alt="${foundProduct.altTxt}">
+                  <img src="${foundProduct[k].imageUrl}" alt="${foundProduct[k].altTxt}">
                 </div>
                 <div class="cart__item__content">
                   <div class="cart__item__content__description">
@@ -73,3 +73,21 @@ else {
     }
 }// fin else
         })//fin fetch
+
+  // -------------------------------------- Fin affichage panier ------------------------------------------------------
+
+  // Gestion du bouton supprimer l'article
+
+    // Sélection des boutons supprimer
+
+    let deleteButton = document.getElementsByClassName("deleteItem")
+    console.log(deleteButton);
+
+    for (let d = 0; d < deleteButton.length; d++) {
+      deleteButton[d].addEventListener("click", (event) =>{
+        event.preventDefault();
+
+        // sélection de l'id produit qui sera supprimé en cliquant sur le bouton
+        let selectionIdASupprimer = produitEnregistreDansLocalStorage[d]._id;
+      })
+  }
