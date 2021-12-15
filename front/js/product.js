@@ -50,7 +50,7 @@
         selectDomElements() 
     
     
-        });
+        
 
 // ---------------------------------------------------------- Local storage --------------------------------------------------------//
 
@@ -58,7 +58,7 @@
 // addEvent listener pour le bouton Ajouter au panier
 
 const envoyerPanier = document.getElementById("addToCart");
-envoyerPanier.addEventListener("click", (event)=> {
+envoyerPanier.addEventListener("click", ()=> {
               
     // --------------------- Stocker la récupération des valeurs du formulaire dans le Local storage --------------------------------
 
@@ -77,7 +77,7 @@ const ajoutProduitLocalStorage = () => {
 
 const popupConfirmation = ()  => {
     
-    if(window.confirm(`Le(s) produit(s) a/ont bien été ajouté(s) au panier, pour consulter le panier OK, Pour Consulter nos autres articles ANNULER`)){
+    if(window.confirm(`Le(s) produit(s) "${foundProduct.name}" a/ont bien été ajouté(s) au panier, pour consulter le panier OK, Pour Consulter nos autres articles ANNULER`)){
         window.location.href ="cart.html";
     }
     else {
@@ -110,4 +110,5 @@ else{
     popupConfirmation();
 }
 
-})
+}) //fin addEvent
+}); //fin fetch
