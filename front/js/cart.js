@@ -40,7 +40,7 @@ else {
         console.log("Nombre d'article " +  produitEnregistreDansLocalStorage.length);
         
         //Calcul du prix , quantité * nombre de produit
-        let sommePrixProduit = parseInt(produitEnregistreDansLocalStorage[k].quantity) * (foundProduct.price)
+        let calculPrixProduit = parseInt(produitEnregistreDansLocalStorage[k].quantity) * (foundProduct.price)
 
         structureProduitPanier = structureProduitPanier + `
         <article class="cart__item" data-id="${foundProduct.name}" data-color="${produitEnregistreDansLocalStorage[k]}">
@@ -51,7 +51,7 @@ else {
                   <div class="cart__item__content__description">
                     <h2>${produitEnregistreDansLocalStorage[k].name}</h2>
                     <p>${produitEnregistreDansLocalStorage[k].colors}</p>
-                    <p>${sommePrixProduit}</p>
+                    <p>${calculPrixProduit}</p>
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
