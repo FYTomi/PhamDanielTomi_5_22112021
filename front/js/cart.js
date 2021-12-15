@@ -45,7 +45,7 @@ else {
         structureProduitPanier = structureProduitPanier + `
         <article class="cart__item" data-id="${foundProduct[k].name}" data-color="${produitEnregistreDansLocalStorage[k]}">
                 <div class="cart__item__img">
-                  <img src="${foundProduct[k].imageUrl}" alt="${foundProduct[k].altTxt}">
+                  <img src="${produitEnregistreDansLocalStorage[k].image}" alt="${produitEnregistreDansLocalStorage[k].altImage}">
                 </div>
                 <div class="cart__item__content">
                   <div class="cart__item__content__description">
