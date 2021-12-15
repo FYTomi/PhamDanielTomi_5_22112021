@@ -62,7 +62,7 @@ envoyerPanier.addEventListener("click", ()=> {
               
     // --------------------- Stocker la récupération des valeurs du formulaire dans le Local storage --------------------------------
 
-// Fonction ajouté un produit dans le local Storage
+// Fonction ajouter un produit dans le local Storage
 
 const ajoutProduitLocalStorage = () => {
 
@@ -87,9 +87,12 @@ const popupConfirmation = ()  => {
 // Récupération des données dans le formulaire 
         
 let productOptionChoices = {
+    name: foundProduct.name,
     _id: idProduit,
     quantity: quantity.value,
     colors: colors.value,
+    image: foundProduct.imageUrl,
+    altImage: foundProduct.altTxt,
 }
 //Déclaration de la variable "produitEnregistreDansLocalStorage" dans laquelle on met les keys et les values dans le localStorage
 let produitEnregistreDansLocalStorage = JSON.parse(localStorage.getItem("produit"));
