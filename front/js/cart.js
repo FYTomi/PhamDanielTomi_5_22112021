@@ -11,7 +11,6 @@ let cartContainer = document.getElementById("cart__items")
 fetch('http://localhost:3000/api/products/')
         .then((res) => res.json())
         .then ((data) => {
-            console.log(data)
             let findProduct = () => {
                 return data
             }
@@ -104,7 +103,7 @@ else {
 
   //addEvent listener pour les boutons quantités
 
-  
+
         })//fin fetch
 
 
@@ -116,16 +115,28 @@ else {
     // Sélection des boutons supprimer
 
     let deleteButton = document.getElementsByClassName("deleteItem")
+    //Affiche les boutons supprimer
     console.log(deleteButton);
 
     for (let d = 0; d < deleteButton.length; d++) {
       deleteButton[d].addEventListener("click", (event) =>{
+        //évite le rechargement de la page
         event.preventDefault();
 
         // sélection de l'id produit qui sera supprimé en cliquant sur le bouton
         let selectionIdASupprimer = produitEnregistreDansLocalStorage[d]._id;
+        console.log(selectionIdASupprimer);
+        console.log("selectionIdASupprimer");
       })
   }
+
+
+  //Gestion des boutons pour modifier la quantités
+    
+    //Sélection des champs de valeurs
+
+    let modifyQuantityButton = document.getElementsByClassName("itemQuantity")
+    console.log(modifyQuantityButton);
 
             // ------------------ Formulaire à remplir -----------------------------------------
 
@@ -154,12 +165,10 @@ else {
 					} else {
 						text.innerHTML = 'Merci de rentrer un prénom valide'
 						text.style.color = 'red'
-					}
-				}
+					}}
 				if (prenom == '') {
 					text.innerHTML = ''
-				}
-        	}
+				}}
       // --------------------Nom -------------------------- 
       function nomValide() {
 				let nom = document.getElementById('lastName').value
@@ -181,12 +190,10 @@ else {
 					} else {
 						text.innerHTML = 'Merci de rentrer un nom valide'
 						text.style.color = 'red'
-					}
-				}
+					}}
 				if (nom == '') {
 					text.innerHTML = ''
-				}
-        	}
+				}}
         // -------------------- Adresse -------------------------- 
 
         function adresseValide() {
@@ -207,8 +214,7 @@ else {
           }
           if (adresse == '') {
             text.innerHTML = ''
-          }
-            }
+          }}
 
         // -------------------- Ville -------------------------- 
         function villeValide() {
@@ -229,8 +235,7 @@ else {
 					}
 				if (ville == '') {
 					text.innerHTML = ''
-				}
-      }
+				}}
 
         // -------------------- Email -------------------------- 
 
@@ -252,8 +257,7 @@ else {
             } 
             if (email == '') {
               text.innerHTML = ''
-            }
-          }
+            }}
           
             
         // Appels des fonctions dans le formulaire
@@ -265,6 +269,26 @@ else {
 
 
        // ------------Passage commande ---------------------------
+          
+       //Sélection du bouton commander et addeventlsitener
+          let envoyerFormulaire = document.getElementById("order")
+          envoyerFormulaire.addEventListener("click",(c)=>{
+            c.preventDefault();
+            
+            let infoClient = {
+              prenom: prenomValide(),
+              nom: nomValide(),
+              adresse: adresseValide(),
+              ville: villeValide(),
+              email: emailValide(),
+            }
 
-        } 
-    ) 
+            //Stocker l'obet dans le localStorage
+            let addClientInfoToLocal = () => {
+              savedClientInfoToLocal = [];
+              savedClientInfoToLocal.push(infoClient);
+              localStorage.setItem("infoClient", JSON.stringify(clientInfoInLocal))
+            }
+
+          })
+        }) 
