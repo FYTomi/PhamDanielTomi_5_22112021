@@ -1,4 +1,4 @@
-// Récupérer paramètres des URL via searchParams
+    // Récupérer paramètres des URL via searchParams
     //window.location.href pour récupérer l'URL de la page
     //get pour récupérer l'id de la page
 
@@ -93,7 +93,9 @@ let productOptionChoices = {
     colors: colors.value,
     image: foundProduct.imageUrl,
     altImage: foundProduct.altTxt,
+    price: foundProduct.price,
 }
+
 //Déclaration de la variable "produitEnregistreDansLocalStorage" dans laquelle on met les keys et les values dans le localStorage
 let produitEnregistreDansLocalStorage = JSON.parse(localStorage.getItem("produit"));
 //JSON.parse c'est pour convertir les données au format JSON ui sont dans le localStorage en objet JS
@@ -112,6 +114,31 @@ else{
     console.log(produitEnregistreDansLocalStorage);
     popupConfirmation();
 }
+// Déclaration d'une variable fonction qui modifie un produit du localStorage
 
-}) //fin addEvent
+let modifyProduct = (index) => {
+    //conversion des chaînes de caractères en valeur
+    produitEnregistreDansLocalStorage[index].quantity = parseInt(produitEnregistreDansLocalStorage[index].quantity)
+    productOptionChoices.quantity = parseInt(productOptionChoices.quantity)
+    let sommeProduit = productOptionChoices.quantity + produitEnregistreDansLocalStorage[index].quantity
+    if (sommeProduit < 100) {
+        sommeProduit();
+        ajoutProduitLocalStorage();
+    }
+}
+
+// --------------------------------Si le panier possède un article ayant le même id et couleurs que l'article ajouté
+
+if(produitEnregistreDansLocalStorage){
+    let addAmount = produitEnregistreDansLocalStorage.findIndex((f) => f.colors == productOptionChoices.colors && f._id == productOptionChoices._id)
+    if (addAmount != -1) {
+        modifyProduct(index);
+        ajoutProduitLocalStorage();
+
+    }else {
+        ajoutProduitLocalStorage();
+    }
+
+    
+    }}) //fin addEvent
 }); //fin fetch
