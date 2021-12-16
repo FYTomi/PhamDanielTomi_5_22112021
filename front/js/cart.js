@@ -79,7 +79,7 @@ else {
       //Sélection des éléments dans le DOM pour afficher la quantité/prix total
     let total = () => {
       let totalQuantite = document.getElementById("totalQuantity");
-      let totalPrice = document.getElementById("totalPrice");
+      let totalPrix = document.getElementById("totalPrice")
       let sommeQuantite = 0;
       let sommePrix = 0;
       //Sélection des blocs contenant le prix des articles de la liste
@@ -88,17 +88,69 @@ else {
       for (let p in produitEnregistreDansLocalStorage) {
         
         let price = produitEnregistreDansLocalStorage[p].price;
-        let objectTotal = produitEnregistreDansLocalStorage[p].quantity;
- 
-        sommePrix += price;
+        let objectTotal = parseInt(produitEnregistreDansLocalStorage[p].quantity);
+        let priceWithAddedQuantity = price * objectTotal
+        
         sommeQuantite  += objectTotal;
+        sommePrix += priceWithAddedQuantity;
       }
+      totalPrice.innerHTML= sommePrix
       totalQuantite.innerHTML = sommeQuantite
-      totalPrice.innerHTML = sommePrix
+      
     }
+    total();
 
 }// fin else
         })//fin fetch
+
+/*         // ----MONTANT TOTAL DU PANIER
+          //Déclaration de la variable pour y mettre les prix qui sont dans le panier
+
+          let totalPrice = [];
+
+          //Aller chercher les prix dans le panier
+          for (let m = 0; m < produitEnregistreDansLocalStorage.length; m++){
+            let prixProduitDansPanier = produitEnregistreDansLocalStorage[m].price
+            //Mettre les prix du panier dans la variable totalPrice
+            totalPrice.push(prixProduitDansPanier)
+
+            
+          }
+          //Additioner les prix qu'il y a dans le tableau totalPrice avec la métode reduce
+          let reducer = (accumulator, currentValue) => accumulator + currentValue
+          const prixTotal = totalPrice.reduce(reducer,0);
+          console.log("Prix total " + prixTotal);
+
+          
+      
+          //Injection html du prix total
+
+          let totalPrixHtml = document.getElementById("totalPrice");
+          totalPrixHtml.innerHTML = prixTotal 
+
+        // ---- QUANTITE TOTAL DU PANIER
+          //Déclaration de la variable pour y mettre les quantités qui sont dans le panier
+
+          let totalPanier = [];
+
+          //Aller chercher les quantités dans le panier 
+          let quantitySection = document.getElementsByClassName("itemQuantity")
+          for (let q = 0; q < quantitySection.length; q++){
+            let produitTotal = quantitySection[q].value
+            totalPanier.push(produitTotal)
+          }
+
+          //Additioner les quantités qu'il y a dans le tableau totalPanier avec la métode reduce
+          reducer = (accumulator, currentValue) => accumulator + currentValue
+          const quantiteTotal = totalPanier.reduce(reducer,0);
+          console.log("Quantité total " + quantiteTotal);
+
+          
+      
+          //Injection html de la quantité total
+
+          let totalProduitHtml = document.getElementById("totalQuantity");
+          totalProduitHtml.innerHTML = quantiteTotal */
 
   // -------------------------------------- Fin affichage panier ------------------------------------------------------
 
@@ -257,26 +309,5 @@ else {
 
        // ------------Passage commande ---------------------------
 
-        let envoyerCommande = document.getElementById("order")
-         //addEventListener pour le bouton commander
-        envoyerCommande.addEventListener("click", (e) => {
-          e.preventDefault()
-
-          //On crée l'objet avec les infos du formulaire
-          let infoClient = {
-            prenom: prenomValide(),
-            nom: nomValide(),
-            adresse: adresseValide(),
-            ville: villeValide(),
-            email:emailValide(),
-          }
-          //Ajout objet dans le localStorage
-          let storeInfoClient = () => {
-            saveClientInfoLocalStorage  = []
-            saveClientInfoLocalStorage.push(infoClient)
-            localStorage.setItem("infosClient", JSON.stringify(saveClientInfoLocalStorage))
-          }
-
-        })
         } 
     ) 
