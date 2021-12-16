@@ -184,43 +184,40 @@ else {
           let adresse = document.getElementById('address').value
           let text = document.getElementById('addressErrorMsg')
           // Prends en compte les caractère spéciaux
-          let pattern = /^[A-Za-z0-9]{5-50}$/
+          let pattern = /^[a-zA-Z\-1-9 ]+$/
             
-          //Si le nom correspond aux critères imposés, on renvoie le résultat
+          //Si l'adresse correspond aux critères imposés, on renvoie le résultat
           if (adresse.match(pattern)) {
             text.innerHTML = 'Adresse est valide'
             text.style.color = 'lightgreen'
             return adresse
           // Si l'adresse ne correspond pas aux critères, message d'erreur
-          } 
+          } else {
+            text.innerHTML = "L'adresse n'est pas valide"
+						text.style.color = 'red'
+          }
           if (adresse == '') {
             text.innerHTML = ''
           }
             }
 
         // -------------------- Ville -------------------------- 
-        function adresseValide() {
+        function villeValide() {
         let ville = document.getElementById('city').value
-				let text = document.getElementById('citeErrorMsg')
+				let text = document.getElementById('cityErrorMsg')
 				// Prends en compte les caractère spéciaux
 				let pattern =
 					/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
-				let number = /^[a-zA-Z\-1-9]+$/
         //Si la ville correspond aux critères imposés, on renvoie le résultat
 				if (ville.match(pattern)) {
-					text.innerHTML = 'le prénom est valide'
+					text.innerHTML = 'La ville est valide'
 					text.style.color = 'lightgreen'
 					return ville
         // Si la ville ne correspond pas aux critères, message d'erreur
 				} else {
-					if (ville.match(number)) {
-						text.innerHTML = 'Les chiffres ne sont pas tolérés'
-						text.style.color = 'red'
-					} else {
-						text.innerHTML = 'Merci de rentrer un nom de ville valide'
+				    text.innerHTML = 'Merci de rentrer un nom de ville valide'
 						text.style.color = 'red'
 					}
-				}
 				if (ville == '') {
 					text.innerHTML = ''
 				}
@@ -232,15 +229,14 @@ else {
           let email = document.getElementById('email').value
           let text = document.getElementById('emailErrorMsg')
           // Prends en compte les caractère spéciaux
-          let pattern =
-          /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          let pattern =/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
           
           //Si l'email correspond aux critères imposés, on renvoie le résultat
           if (email.match(pattern)) {
             text.innerHTML = 'le email est valide'
             text.style.color = 'lightgreen'
             return email
-          // Si le nom ne correspond pas aux critères, message d'erreur
+          // Si l'email'ne correspond pas aux critères, message d'erreur
           } else {
               text.innerHTML = "L'email n'est pas valide"
               text.style.color = 'red'
@@ -255,7 +251,7 @@ else {
           prenomValide();
           nomValide();
           adresseValide();
-          adresseValide();
+          villeValide();
           emailValide();
         } 
     ) 
