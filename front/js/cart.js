@@ -118,7 +118,7 @@ else {
       })
   }
 
-  // ------------------ Formulaire à remplir -----------------------------------------
+            // ------------------ Formulaire à remplir -----------------------------------------
 
   
 
@@ -152,6 +152,35 @@ else {
 				}
         	}
       // --------------------Nom -------------------------- 
+      function nomValide() {
+				let nom = document.getElementById('lastName').value
+				let text = document.getElementById('lastNameErrorMsg')
+				// Prends en compte les caractère spéciaux
+				let pattern =
+					/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
+				let number = /^[a-zA-Z\-1-9]+$/
+        //Si le nom correspond aux critères imposés, on renvoie le résultat
+				if (nom.match(pattern)) {
+					text.innerHTML = 'le nom est valide'
+					text.style.color = '#00ff00'
+					return nom
+        // Si le nom ne correspond pas aux critères, message d'erreur
+				} else {
+					if (nom.match(number)) {
+						text.innerHTML = 'Les chiffres ne sont pas tolérés'
+						text.style.color = '#fbbcbc'
+					} else {
+						text.innerHTML = 'Merci de rentrer un nom valide'
+						text.style.color = '#fbbcbc'
+					}
+				}
+				if (nom == '') {
+					text.innerHTML = ''
+				}
+        	}
+        // -------------------- Adresse -------------------------- 
         // Appels des fonctions dans le formulaires
-          prenomValide()} 
+          prenomValide();
+          nomValide();
+        } 
     ) 
