@@ -101,56 +101,13 @@ else {
     total();
 
 }// fin else
+
+  //addEvent listener pour les boutons quantités
+
+  
         })//fin fetch
 
-/*         // ----MONTANT TOTAL DU PANIER
-          //Déclaration de la variable pour y mettre les prix qui sont dans le panier
 
-          let totalPrice = [];
-
-          //Aller chercher les prix dans le panier
-          for (let m = 0; m < produitEnregistreDansLocalStorage.length; m++){
-            let prixProduitDansPanier = produitEnregistreDansLocalStorage[m].price
-            //Mettre les prix du panier dans la variable totalPrice
-            totalPrice.push(prixProduitDansPanier)
-
-            
-          }
-          //Additioner les prix qu'il y a dans le tableau totalPrice avec la métode reduce
-          let reducer = (accumulator, currentValue) => accumulator + currentValue
-          const prixTotal = totalPrice.reduce(reducer,0);
-          console.log("Prix total " + prixTotal);
-
-          
-      
-          //Injection html du prix total
-
-          let totalPrixHtml = document.getElementById("totalPrice");
-          totalPrixHtml.innerHTML = prixTotal 
-
-        // ---- QUANTITE TOTAL DU PANIER
-          //Déclaration de la variable pour y mettre les quantités qui sont dans le panier
-
-          let totalPanier = [];
-
-          //Aller chercher les quantités dans le panier 
-          let quantitySection = document.getElementsByClassName("itemQuantity")
-          for (let q = 0; q < quantitySection.length; q++){
-            let produitTotal = quantitySection[q].value
-            totalPanier.push(produitTotal)
-          }
-
-          //Additioner les quantités qu'il y a dans le tableau totalPanier avec la métode reduce
-          reducer = (accumulator, currentValue) => accumulator + currentValue
-          const quantiteTotal = totalPanier.reduce(reducer,0);
-          console.log("Quantité total " + quantiteTotal);
-
-          
-      
-          //Injection html de la quantité total
-
-          let totalProduitHtml = document.getElementById("totalQuantity");
-          totalProduitHtml.innerHTML = quantiteTotal */
 
   // -------------------------------------- Fin affichage panier ------------------------------------------------------
 
