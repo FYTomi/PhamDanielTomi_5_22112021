@@ -236,7 +236,7 @@ else {
             text.innerHTML = 'le email est valide'
             text.style.color = 'lightgreen'
             return email
-          // Si l'email'ne correspond pas aux critères, message d'erreur
+          // Si l'email ne correspond pas aux critères, message d'erreur
           } else {
               text.innerHTML = "L'email n'est pas valide"
               text.style.color = 'red'
@@ -247,11 +247,36 @@ else {
           }
           
             
-        // Appels des fonctions dans le formulaires
+        // Appels des fonctions dans le formulaire
           prenomValide();
           nomValide();
           adresseValide();
           villeValide();
           emailValide();
+
+
+       // ------------Passage commande ---------------------------
+
+        let envoyerCommande = document.getElementById("order")
+         //addEventListener pour le bouton commander
+        envoyerCommande.addEventListener("click", (e) => {
+          e.preventDefault()
+
+          //On crée l'objet avec les infos du formulaire
+          let infoClient = {
+            prenom: prenomValide(),
+            nom: nomValide(),
+            adresse: adresseValide(),
+            ville: villeValide(),
+            email:emailValide(),
+          }
+          //Ajout objet dans le localStorage
+          let storeInfoClient = () => {
+            saveClientInfoLocalStorage  = []
+            saveClientInfoLocalStorage.push(infoClient)
+            localStorage.setItem("infosClient", JSON.stringify(saveClientInfoLocalStorage))
+          }
+
+        })
         } 
     ) 
