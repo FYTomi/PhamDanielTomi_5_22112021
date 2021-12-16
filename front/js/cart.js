@@ -43,6 +43,7 @@ else {
         let quantityProduct = produitEnregistreDansLocalStorage[k].quantity;
         let calculPrixProduit = quantityProduct * produitEnregistreDansLocalStorage[k].price;
 
+        //On utilise la variable pour incrémenter autant de bloc html que de produit
         structureProduitPanier = structureProduitPanier + `
         <article class="cart__item" data-id="${foundProduct[k].name}" data-color="${produitEnregistreDansLocalStorage[k]}">
                 <div class="cart__item__img">
@@ -52,7 +53,7 @@ else {
                   <div class="cart__item__content__description">
                     <h2>${produitEnregistreDansLocalStorage[k].name}</h2>
                     <p>${produitEnregistreDansLocalStorage[k].colors}</p>
-                    <p>${calculPrixProduit + " €"}</p>
+                    <p id="price">${calculPrixProduit + " €"}</p>
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
@@ -72,6 +73,30 @@ else {
             //injection html dans la page panier
         cartContainer.innerHTML= structureProduitPanier;
     }
+
+    //Affichage quantité total et prix total
+
+      //Sélection des éléments dans le DOM pour afficher la quantité/prix total
+    let total = () => {
+      let totalQuantite = document.getElementById("totalQuantity");
+      let totalPrice = document.getElementById("totalPrice");
+      let sommeQuantite = 0;
+      let sommePrix = 0;
+      //Sélection des blocs contenant le prix des articles de la liste
+
+      let priceBloc = document.getElementById("price");
+      for (let p in produitEnregistreDansLocalStorage) {
+        
+        let price = produitEnregistreDansLocalStorage[p].price;
+        let objectTotal = produitEnregistreDansLocalStorage[p].quantity;
+ 
+        sommePrix += price;
+        sommeQuantite  += objectTotal;
+      }
+      totalQuantite.innerHTML = sommeQuantite
+      totalPrice.innerHTML = sommePrix
+    }
+
 }// fin else
         })//fin fetch
 
@@ -92,3 +117,41 @@ else {
         let selectionIdASupprimer = produitEnregistreDansLocalStorage[d]._id;
       })
   }
+
+  // ------------------ Formulaire à remplir -----------------------------------------
+
+  
+
+    addEventListener('change', () => {
+			  
+      // --------------------Prénom --------------------------
+      function prenomValide() {
+				let prenom = document.getElementById('firstName').value
+				let text = document.getElementById('firstNameErrorMsg')
+				// Prends en compte les caractère spéciaux
+				let pattern =
+					/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
+				let number = /^[a-zA-Z\-1-9]+$/
+        //Si le prénom correspond aux critères imposés, on renvoie le résultat
+				if (prenom.match(pattern)) {
+					text.innerHTML = 'le prénom est valide'
+					text.style.color = '#00ff00'
+					return prenom
+        // Si le prénom ne correspond pas aux critères, message d'erreur
+				} else {
+					if (prenom.match(number)) {
+						text.innerHTML = 'Les chiffres ne sont pas tolérés'
+						text.style.color = '#fbbcbc'
+					} else {
+						text.innerHTML = 'Merci de rentrer un prénom valide'
+						text.style.color = '#fbbcbc'
+					}
+				}
+				if (prenom == '') {
+					text.innerHTML = ''
+				}
+        	}
+      // --------------------Nom -------------------------- 
+        // Appels des fonctions dans le formulaires
+          prenomValide()} 
+    ) 
