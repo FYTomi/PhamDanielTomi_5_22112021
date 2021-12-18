@@ -49,7 +49,7 @@
     
     
 // Sélection quantité dans le DOM
-const quantite = document.getElementById("quantity")
+let quantite = document.getElementById("quantity")
 
 // ---------------------------------------------------------- Local storage --------------------------------------------------------//
 
@@ -60,7 +60,7 @@ const envoyerPanier = document.getElementById("addToCart");
 envoyerPanier.addEventListener("click", ()=> {
      
 //Conversion de la chaîne de caractère en valeur de la quantité
-const quantiteProduit = parseInt(quantite.value);
+let quantiteProduit = parseInt(quantite.value);
 
     // --------------------- Stocker la récupération des valeurs du formulaire dans le Local storage --------------------------------
 
