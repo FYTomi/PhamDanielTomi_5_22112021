@@ -114,30 +114,18 @@ else{
     console.log(productInLocal);
     popupConfirmation();
 }
-// Déclaration d'une variable fonction qui modifie un produit du localStorage
-
-let modifyProduct = (index) => {
-    //conversion des chaînes de caractères en valeur
-    productInLocal[index].quantity = parseInt(productInLocal[index].quantity)
-    productOptionChoices.quantity = parseInt(productOptionChoices.quantity)
-    let sommeProduit = productOptionChoices.quantity + productInLocal[index].quantity
-    if (sommeProduit < 100) {
-        sommeProduit();
-        ajoutProduitLocalStorage();
-    }
-}
-
 // --------------------------------Si le panier possède un article ayant le même id et couleurs que l'article ajouté
 
 if(productInLocal){
-    let addAmount = productInLocal.findIndex((f) => f.colors == productOptionChoices.colors && f._id == productOptionChoices._id)
-    if (addAmount != -1) {
-        modifyProduct(index);
-        ajoutProduitLocalStorage();
-
-    }else {
-        ajoutProduitLocalStorage();
+    
+    for (let f=0; f < productInLocal.length; f++) {
+    if ((productOptionChoices.colors === productInLocal[f].colors) && (productOptionChoices._id === productInLocal[f]._id)) {
+        //On additione la quantité du produit choisit avec la quantité de produit récupéré du localStorage
+        productInLocal[f].quantity += parseInt(productOptionChoices.quantity);
+        productInLocal.push(productOptionChoices[f].quantity);
+        localStorage.setItem ("produit", JSON.stringify(productInLocal));
     }
+} // Fin for
 
     
     }}) //fin addEvent
