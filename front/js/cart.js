@@ -14,11 +14,11 @@ const ajoutProduitLocalStorage = () => {
   localStorage.setItem ("produit", JSON.stringify(productInLocal));
 }
 
-//Création du tableau de commande pour le POST
-for (let k in productInLocal) {
-  let products = [] 
-  console.log(products)
-  let productInStorage = [productInLocal[k]._id]
+//Création du tableau de commande pour le POST pour récupérer l'id de chaque produit de la commande
+let products = [] 
+console.log(products)
+for (let n in productInLocal) {
+  let productInStorage = [productInLocal[n]._id]
   products.push(productInStorage)
   }
 
