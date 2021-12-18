@@ -102,7 +102,7 @@ let productOptionChoices = {
 //Déclaration de la variable "productInLocal" dans laquelle on met les keys et les values dans le localStorage
 let productInLocal = JSON.parse(localStorage.getItem("produit"));
 
-if (productOptionChoices.quantity == "" || productOptionChoices.colors == "" || productOptionChoices == 0) {
+if (productOptionChoices.quantity == "" || productOptionChoices.colors == "" || productOptionChoices.quantity > 100) {
     alert ("Veuillez selectionner une couleur et/ou un nombre d'article")
 } else {
     //S'il y a déjà des produits enregistré dans le localStorage
@@ -121,13 +121,13 @@ if (productOptionChoices.quantity == "" || productOptionChoices.colors == "" || 
 
 // --------------------------------Si le panier possède un article ayant le même id et couleurs que l'article ajouté
 
-if(productInLocal){
+/*if(productInLocal){
     
     for (let f in productInLocal) {
     //Si le produit selectionné a une couleur ET un id identique
     if ((productOptionChoices.colors == productInLocal[f].colors) && (productOptionChoices._id == productInLocal[f]._id)) {
         //On additione la quantité du produit choisit avec la quantité du produit récupéré du localStorage
-        productInLocal[f].quantity + parseInt(productOptionChoices[f].quantity);
+        productInLocal[f].quantity += parseInt(productOptionChoices[f].quantity);
         //Renvoi au localStorage
         localStorage.setItem ("produit", JSON.stringify(productInLocal));
         ;
@@ -135,5 +135,5 @@ if(productInLocal){
     
 } // Fin for
     
-    }}) //fin addEvent
+    } */ }) //fin addEvent
 }); //fin then data
