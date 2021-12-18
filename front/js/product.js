@@ -44,9 +44,7 @@
                 )
             }
         }
-    //commentaire 
-        //let  addToCartButton = document.getElementById('addToCart')
-    //addToCartButton.setAttribute('data-productID', foundProduct._id)
+  
         selectDomElements() 
     
     
@@ -128,7 +126,7 @@ if(productInLocal){
     //Si le produit selectionné a une couleur ET un id identique
     if ((productOptionChoices.colors == productInLocal[f].colors) && (productOptionChoices._id == productInLocal[f]._id)) {
         //On additione la quantité du produit choisit avec la quantité de produit récupéré du localStorage
-        (productInLocal[f].quantity) += (productOptionChoices.quantity);
+        productInLocal[f].quantity += parseInt(productOptionChoices.quantity);
         localStorage.setItem ("produit", JSON.stringify(productInLocal));
     }
     
