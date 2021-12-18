@@ -50,7 +50,8 @@
         selectDomElements() 
     
     
-        
+// Sélection quantité dans le DOM
+const quantite = document.getElementById("quantity")
 
 // ---------------------------------------------------------- Local storage --------------------------------------------------------//
 
@@ -59,7 +60,10 @@
 
 const envoyerPanier = document.getElementById("addToCart");
 envoyerPanier.addEventListener("click", ()=> {
-              
+     
+//Conversion de la chaîne de caractère en valeur de la quantité
+const quantiteProduit = parseInt(quantite.value);
+
     // --------------------- Stocker la récupération des valeurs du formulaire dans le Local storage --------------------------------
 
 // Fonction ajouter un produit dans le local Storage
@@ -89,7 +93,7 @@ const popupConfirmation = ()  => {
 let productOptionChoices = {
     name: foundProduct.name,
     _id: idProduit,
-    quantity: quantity.value,
+    quantity: quantiteProduit,
     colors: colors.value,
     image: foundProduct.imageUrl,
     altImage: foundProduct.altTxt,
@@ -98,35 +102,37 @@ let productOptionChoices = {
 
 //Déclaration de la variable "productInLocal" dans laquelle on met les keys et les values dans le localStorage
 let productInLocal = JSON.parse(localStorage.getItem("produit"));
-//JSON.parse c'est pour convertir les données au format JSON ui sont dans le localStorage en objet JS
-console.log(productInLocal);
 
-//S'il y a déjà des produits enregistré dans le localStorage
-if(productInLocal){
+if (productOptionChoices.quantity == "" || productOptionChoices.colors == "" || productOptionChoices == 0) {
+    alert ("Veuillez selectionner une couleur et/ou un nombre d'article")
+} else {
+    //S'il y a déjà des produits enregistré dans le localStorage
+    if(productInLocal){
     ajoutProduitLocalStorage();
     console.log("ok");
     popupConfirmation();
-
-}//S'il n'y a pas de produit d'enregistré dans le localStorage
-else{
+} else {
+    //S'il n'y a pas de produit d'enregistré dans le localStorage
     productInLocal = [];
     ajoutProduitLocalStorage();
     console.log(productInLocal);
     popupConfirmation();
+    }
 }
+
 // --------------------------------Si le panier possède un article ayant le même id et couleurs que l'article ajouté
 
 if(productInLocal){
     
     for (let f=0; f < productInLocal.length; f++) {
-    if ((productOptionChoices.colors === productInLocal[f].colors) && (productOptionChoices._id === productInLocal[f]._id)) {
+    //Si le produit selectionné a une couleur ET un id identique
+    if ((productOptionChoices.colors == productInLocal[f].colors) && (productOptionChoices._id == productInLocal[f]._id)) {
         //On additione la quantité du produit choisit avec la quantité de produit récupéré du localStorage
-        productInLocal[f].quantity += parseInt(productOptionChoices.quantity);
-        productInLocal.push(productOptionChoices[f].quantity);
+        (productInLocal[f].quantity) += (productOptionChoices.quantity);
         localStorage.setItem ("produit", JSON.stringify(productInLocal));
     }
+    
 } // Fin for
-
     
     }}) //fin addEvent
-}); //fin fetch
+}); //fin then data
