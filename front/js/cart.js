@@ -70,7 +70,7 @@ else {
                   <div class="cart__item__content__description">
                     <h2>${productInLocal[k].name}</h2>
                     <p>${productInLocal[k].colors}</p>
-                    <p id="price">${calculPrixProduit + " €"}</p>
+                    <p id="price">${productInLocal[k].price + " €"}</p>
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
@@ -108,12 +108,11 @@ else {
         
         let price = productInLocal[p].price;
         let objectTotal = parseInt(productInLocal[p].quantity);
-        let priceWithAddedQuantity = price * objectTotal
         
         sommeQuantite  += objectTotal;
-        sommePrix += priceWithAddedQuantity;
+        sommePrix += price;
       }
-      totalPrice.innerHTML= sommePrix
+      totalPrix.innerHTML= sommePrix
       totalQuantite.innerHTML = sommeQuantite
       
     }

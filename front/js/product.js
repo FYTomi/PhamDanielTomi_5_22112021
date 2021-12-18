@@ -59,8 +59,9 @@ let quantite = document.getElementById("quantity")
 const envoyerPanier = document.getElementById("addToCart");
 envoyerPanier.addEventListener("click", ()=> {
      
-//Conversion de la chaîne de caractère en valeur de la quantité
+//Conversion de la chaîne de caractère en valeur de la quantité et du prix
 let quantiteProduit = parseInt(quantite.value);
+let prixProduit = quantiteProduit * foundProduct.price
 
     // --------------------- Stocker la récupération des valeurs du formulaire dans le Local storage --------------------------------
 
@@ -95,7 +96,7 @@ let productOptionChoices = {
     colors: colors.value,
     image: foundProduct.imageUrl,
     altImage: foundProduct.altTxt,
-    price: foundProduct.price,
+    price: prixProduit,
 }
 
 //Déclaration de la variable "productInLocal" dans laquelle on met les keys et les values dans le localStorage
@@ -122,12 +123,14 @@ if (productOptionChoices.quantity == "" || productOptionChoices.colors == "" || 
 
 if(productInLocal){
     
-    for (let f=0; f < productInLocal.length; f++) {
+    for (let f in productInLocal) {
     //Si le produit selectionné a une couleur ET un id identique
     if ((productOptionChoices.colors == productInLocal[f].colors) && (productOptionChoices._id == productInLocal[f]._id)) {
-        //On additione la quantité du produit choisit avec la quantité de produit récupéré du localStorage
-        productInLocal[f].quantity += parseInt(productOptionChoices.quantity);
+        //On additione la quantité du produit choisit avec la quantité du produit récupéré du localStorage
+        productInLocal[f].quantity + parseInt(productOptionChoices[f].quantity);
+        //Renvoi au localStorage
         localStorage.setItem ("produit", JSON.stringify(productInLocal));
+        ;
     }
     
 } // Fin for
