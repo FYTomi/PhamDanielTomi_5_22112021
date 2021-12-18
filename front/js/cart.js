@@ -62,7 +62,7 @@ else {
 
         //On utilise la variable pour incrémenter autant de bloc html que de produit
         structureProduitPanier = structureProduitPanier + `
-        <article class="cart__item" data-id="${foundProduct[k].name}" data-color="${productInLocal[k]}">
+        <article class="cart__item" data-id="${foundProduct[k]._id}" data-color="${productInLocal[k].colors}">
                 <div class="cart__item__img">
                   <img src="${productInLocal[k].image}" alt="${productInLocal[k].altImage}">
                 </div>
@@ -131,9 +131,9 @@ else {
 
   // Gestion du bouton supprimer l'article
 
-    // Sélection des boutons supprimer
+    // Sélection des boutons supprimer et les stocker dans un tableau
 
-    let deleteButton = document.getElementsByClassName("deleteItem")
+    let deleteButton = [...document.getElementsByClassName("deleteItem")]
     //Affiche les boutons supprimer
     
     document.querySelectorAll('.deleteItem').forEach(item=>{
