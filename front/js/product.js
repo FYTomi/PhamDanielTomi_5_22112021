@@ -67,10 +67,10 @@ envoyerPanier.addEventListener("click", ()=> {
 const ajoutProduitLocalStorage = () => {
 
     // Ajout dans le tableau de l'objet avec les valeurs choisi par l'utilisateur
-    produitEnregistreDansLocalStorage.push(productOptionChoices);
+    productInLocal.push(productOptionChoices);
 
     //La transformation en format JSON et l'envoyer dans la key "produit" du localStorage
-    localStorage.setItem ("produit", JSON.stringify(produitEnregistreDansLocalStorage));
+    localStorage.setItem ("produit", JSON.stringify(productInLocal));
 }
 
 // Fonction pop up quand le client ajoute un article
@@ -96,31 +96,31 @@ let productOptionChoices = {
     price: foundProduct.price,
 }
 
-//Déclaration de la variable "produitEnregistreDansLocalStorage" dans laquelle on met les keys et les values dans le localStorage
-let produitEnregistreDansLocalStorage = JSON.parse(localStorage.getItem("produit"));
+//Déclaration de la variable "productInLocal" dans laquelle on met les keys et les values dans le localStorage
+let productInLocal = JSON.parse(localStorage.getItem("produit"));
 //JSON.parse c'est pour convertir les données au format JSON ui sont dans le localStorage en objet JS
-console.log(produitEnregistreDansLocalStorage);
+console.log(productInLocal);
 
 //S'il y a déjà des produits enregistré dans le localStorage
-if(produitEnregistreDansLocalStorage){
+if(productInLocal){
     ajoutProduitLocalStorage();
     console.log("ok");
     popupConfirmation();
 
 }//S'il n'y a pas de produit d'enregistré dans le localStorage
 else{
-    produitEnregistreDansLocalStorage = [];
+    productInLocal = [];
     ajoutProduitLocalStorage();
-    console.log(produitEnregistreDansLocalStorage);
+    console.log(productInLocal);
     popupConfirmation();
 }
 // Déclaration d'une variable fonction qui modifie un produit du localStorage
 
 let modifyProduct = (index) => {
     //conversion des chaînes de caractères en valeur
-    produitEnregistreDansLocalStorage[index].quantity = parseInt(produitEnregistreDansLocalStorage[index].quantity)
+    productInLocal[index].quantity = parseInt(productInLocal[index].quantity)
     productOptionChoices.quantity = parseInt(productOptionChoices.quantity)
-    let sommeProduit = productOptionChoices.quantity + produitEnregistreDansLocalStorage[index].quantity
+    let sommeProduit = productOptionChoices.quantity + productInLocal[index].quantity
     if (sommeProduit < 100) {
         sommeProduit();
         ajoutProduitLocalStorage();
@@ -129,8 +129,8 @@ let modifyProduct = (index) => {
 
 // --------------------------------Si le panier possède un article ayant le même id et couleurs que l'article ajouté
 
-if(produitEnregistreDansLocalStorage){
-    let addAmount = produitEnregistreDansLocalStorage.findIndex((f) => f.colors == productOptionChoices.colors && f._id == productOptionChoices._id)
+if(productInLocal){
+    let addAmount = productInLocal.findIndex((f) => f.colors == productOptionChoices.colors && f._id == productOptionChoices._id)
     if (addAmount != -1) {
         modifyProduct(index);
         ajoutProduitLocalStorage();

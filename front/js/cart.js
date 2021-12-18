@@ -1,10 +1,28 @@
     
 
 //On récupére les infos stockées dans le localStorage
-let produitEnregistreDansLocalStorage = JSON.parse(localStorage.getItem("produit"));
-    
+let productInLocal = JSON.parse(localStorage.getItem("produit"));
+let clientInfoInLocal = JSON.parse(localStorage.getItem("infoClient"));
 
-//Sélection dans le DOM du conteneur des articles ajoutés
+
+const ajoutProduitLocalStorage = () => {
+
+  // Ajout dans le tableau de l'objet avec les valeurs choisi par l'utilisateur
+  productInLocal.push(productOptionChoices);
+
+  //La transformation en format JSON et l'envoyer dans la key "produit" du localStorage
+  localStorage.setItem ("produit", JSON.stringify(productInLocal));
+}
+
+//Création du tableau de commande pour le POST
+for (let k in productInLocal) {
+  let products = [] 
+  console.log(products)
+  let productInStorage = [productInLocal[k]._id]
+  products.push(productInStorage)
+  }
+
+  //Sélection dans le DOM du conteneur des articles ajoutés
 let cartContainer = document.getElementById("cart__items")
 
 //Requête API pour le JSON des produits à afficher les infos de chaque produit
@@ -21,7 +39,7 @@ fetch('http://localhost:3000/api/products/')
 
 // Si le panier est vide : Afficher le panier est vide
 
-if(produitEnregistreDansLocalStorage === null) {
+if(productInLocal === null) {
     console.log("le panier est vide");
     const panierVide = `<div class= "container-panier-vide">
                             <h2> Le panier est vide </h2>
@@ -35,29 +53,29 @@ else {
     let structureProduitPanier = [];
     console.log(structureProduitPanier);
     
-    for (k = 0; k < produitEnregistreDansLocalStorage.length; k++) {
-        console.log("Nombre d'article " +  produitEnregistreDansLocalStorage.length);
+    for (k = 0; k < productInLocal.length; k++) {
+        console.log("Nombre d'article " +  productInLocal.length);
         
         //Calcul du prix , quantité * nombre de produit
-        let quantityProduct = produitEnregistreDansLocalStorage[k].quantity;
-        let calculPrixProduit = quantityProduct * produitEnregistreDansLocalStorage[k].price;
+        let quantityProduct = productInLocal[k].quantity;
+        let calculPrixProduit = quantityProduct * productInLocal[k].price;
 
         //On utilise la variable pour incrémenter autant de bloc html que de produit
         structureProduitPanier = structureProduitPanier + `
-        <article class="cart__item" data-id="${foundProduct[k].name}" data-color="${produitEnregistreDansLocalStorage[k]}">
+        <article class="cart__item" data-id="${foundProduct[k].name}" data-color="${productInLocal[k]}">
                 <div class="cart__item__img">
-                  <img src="${produitEnregistreDansLocalStorage[k].image}" alt="${produitEnregistreDansLocalStorage[k].altImage}">
+                  <img src="${productInLocal[k].image}" alt="${productInLocal[k].altImage}">
                 </div>
                 <div class="cart__item__content">
                   <div class="cart__item__content__description">
-                    <h2>${produitEnregistreDansLocalStorage[k].name}</h2>
-                    <p>${produitEnregistreDansLocalStorage[k].colors}</p>
+                    <h2>${productInLocal[k].name}</h2>
+                    <p>${productInLocal[k].colors}</p>
                     <p id="price">${calculPrixProduit + " €"}</p>
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
                       <p>Qté : </p>
-                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${produitEnregistreDansLocalStorage[k].quantity}">
+                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${productInLocal[k].quantity}">
                     </div>
                     <div class="cart__item__content__settings__delete">
                       <p class="deleteItem">Supprimer</p>
@@ -66,8 +84,10 @@ else {
                 </div>
         </article>
         `;
-    }
-        if(k == produitEnregistreDansLocalStorage.length){
+        
+        
+    } 
+        if(k == productInLocal.length){
         
             //injection html dans la page panier
         cartContainer.innerHTML= structureProduitPanier;
@@ -84,10 +104,10 @@ else {
       //Sélection des blocs contenant le prix des articles de la liste
 
       let priceBloc = document.getElementById("price");
-      for (let p in produitEnregistreDansLocalStorage) {
+      for (let p in productInLocal) {
         
-        let price = produitEnregistreDansLocalStorage[p].price;
-        let objectTotal = parseInt(produitEnregistreDansLocalStorage[p].quantity);
+        let price = productInLocal[p].price;
+        let objectTotal = parseInt(productInLocal[p].quantity);
         let priceWithAddedQuantity = price * objectTotal
         
         sommeQuantite  += objectTotal;
@@ -116,19 +136,26 @@ else {
 
     let deleteButton = document.getElementsByClassName("deleteItem")
     //Affiche les boutons supprimer
-    console.log(deleteButton);
+    
+    document.querySelectorAll('.deleteItem').forEach(item=>{
+      console.log(item)
+      item.addEventListener("click", event => {
+        console.log("test")
+      } )
+    })
 
-    for (let d = 0; d < deleteButton.length; d++) {
+    /* for (let d = 0; d < deleteButton.length; d++) {
       deleteButton[d].addEventListener("click", (event) =>{
         //évite le rechargement de la page
         event.preventDefault();
 
         // sélection de l'id produit qui sera supprimé en cliquant sur le bouton
-        let selectionIdASupprimer = produitEnregistreDansLocalStorage[d]._id;
+        let selectionIdASupprimer = productInLocal[d]._id;
         console.log(selectionIdASupprimer);
         console.log("selectionIdASupprimer");
-      })
-  }
+        
+      }) 
+  }*/
 
 
   //Gestion des boutons pour modifier la quantités
@@ -275,7 +302,7 @@ else {
           envoyerFormulaire.addEventListener("click",(c)=>{
             c.preventDefault();
             
-            let infoClient = {
+            let contact = {
               prenom: prenomValide(),
               nom: nomValide(),
               adresse: adresseValide(),
@@ -286,9 +313,23 @@ else {
             //Stocker l'obet dans le localStorage
             let addClientInfoToLocal = () => {
               savedClientInfoToLocal = [];
-              savedClientInfoToLocal.push(infoClient);
+              savedClientInfoToLocal.push(contact);
               localStorage.setItem("infoClient", JSON.stringify(clientInfoInLocal))
             }
+            //Si une des infos du formulaire n'est pas renseigné, ne pas exécuter le code
+            if (
+              contact.prenom == undefined || contact.nom == undefined || contact.adresse == undefined ||contact.ville == undefined || contact.email ==undefined )
+              {
+                return false
+              } else {
+                if (!clientInfoInLocal) {
+                  addClientInfoToLocal();
+                }
+              }
+              // On cherche a envoyer deux objets : contact et le tableau de commande
+              
+
+            
 
           })
         }) 
