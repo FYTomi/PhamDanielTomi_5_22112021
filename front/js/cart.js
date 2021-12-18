@@ -39,7 +39,7 @@ fetch('http://localhost:3000/api/products/')
 
 // Si le panier est vide : Afficher le panier est vide
 
-if(productInLocal === null) {
+if(productInLocal === null || productInLocal == 0 ) {
     console.log("le panier est vide");
     const panierVide = `<div class= "container-panier-vide">
                             <h2> Le panier est vide </h2>
@@ -62,7 +62,7 @@ else {
 
         //On utilise la variable pour incrémenter autant de bloc html que de produit
         structureProduitPanier = structureProduitPanier + `
-        <article class="cart__item" data-id="${foundProduct[k]._id}" data-color="${productInLocal[k].colors}">
+        <article class="cart__item" data-id="${productInLocal[k]._id}" data-color="${productInLocal[k].colors}">
                 <div class="cart__item__img">
                   <img src="${productInLocal[k].image}" alt="${productInLocal[k].altImage}">
                 </div>
@@ -120,41 +120,46 @@ else {
 
 }// fin else
 
-  //addEvent listener pour les boutons quantités
+  //addEvent listener pour les boutons supprimer
 
 
+  // Gestion du bouton supprimer l'article
+
+    // Sélection des boutons supprimer et les stocker dans un tableau
+    
+    let btn_supprimer = document.querySelectorAll('.deleteItem');
+      console.log(btn_supprimer);
+      
+      for (let d = 0; d < btn_supprimer.length; d++) {
+      btn_supprimer[d].addEventListener("click", (event) =>{
+        //évite le rechargement de la page
+        event.preventDefault();
+
+        //Sélection de l'id du produit qui va être supprimer en cliquant sur le bouton supprimer
+        let id_productToDelete = productInLocal[d]._id
+        console.log(id_productToDelete);
+        console.log("id_productToDelete");
+
+        //Avec la méthode filter je sélectionner les éléments à garder et je supprime l'élément ou le btn suppr a été cliqué
+        productInLocal = productInLocal.filter( element=> element._id !== id_productToDelete);
+        
+        //on envoie la variable dans le localStorage
+        //La transformation en format JSON et l'envoyer dans la key "produit" du localStorage
+        localStorage.setItem ("produit", JSON.stringify(productInLocal));
+       
+        // Alerte pour avertir que le produit a été supprimé et rechargement de la page
+        window.location.href= "cart.html"
+        
+        
+      }) 
+  }
         })//fin fetch
 
 
 
   // -------------------------------------- Fin affichage panier ------------------------------------------------------
 
-  // Gestion du bouton supprimer l'article
-
-    // Sélection des boutons supprimer et les stocker dans un tableau
-
-    let deleteButton = [...document.getElementsByClassName("deleteItem")]
-    //Affiche les boutons supprimer
-    
-    document.querySelectorAll('.deleteItem').forEach(item=>{
-      console.log(item)
-      item.addEventListener("click", event => {
-        console.log("test")
-      } )
-    })
-
-    /* for (let d = 0; d < deleteButton.length; d++) {
-      deleteButton[d].addEventListener("click", (event) =>{
-        //évite le rechargement de la page
-        event.preventDefault();
-
-        // sélection de l'id produit qui sera supprimé en cliquant sur le bouton
-        let selectionIdASupprimer = productInLocal[d]._id;
-        console.log(selectionIdASupprimer);
-        console.log("selectionIdASupprimer");
-        
-      }) 
-  }*/
+  
 
 
   //Gestion des boutons pour modifier la quantités
@@ -168,7 +173,8 @@ else {
 
   
 
-    addEventListener('change', () => {
+    /*addEventListener('change', (event) => {
+      event.stopPropagation();
 			  
       // --------------------Prénom --------------------------
       function prenomValide() {
@@ -331,4 +337,4 @@ else {
             
 
           })
-        }) 
+        }  ) */
