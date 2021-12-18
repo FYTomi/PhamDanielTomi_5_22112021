@@ -327,7 +327,7 @@ else {
                 }
               }
               // On cherche a envoyer deux objets : contact et le tableau de commande
-              
+              let elementsToSend = {products, contact}
 
             
 
