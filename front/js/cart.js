@@ -148,12 +148,24 @@ else {
         localStorage.setItem ("produit", JSON.stringify(productInLocal));
        
         // Alerte pour avertir que le produit a été supprimé et rechargement de la page
+        alert ("l'article a bien été supprimé")
         window.location.href= "cart.html"
         
         
-      }) 
-  }
-        })//fin fetch
+      })}//Fin addEvent click Bouton supprimer
+        
+
+  //Gestion des boutons pour modifier la quantités
+    
+    //Sélection des champs de valeurs
+
+    let modifyQuantityButton = document.querySelectorAll(".itemQuantity");
+    console.log(modifyQuantityButton);
+      
+
+
+
+    })//fin fetch
 
 
 
@@ -162,18 +174,13 @@ else {
   
 
 
-  //Gestion des boutons pour modifier la quantités
-    
-    //Sélection des champs de valeurs
-
-    let modifyQuantityButton = document.getElementsByClassName("itemQuantity")
-    console.log(modifyQuantityButton);
+  
 
             // ------------------ Formulaire à remplir -----------------------------------------
 
   
 
-    /*addEventListener('change', (event) => {
+    addEventListener('change', (event) => {
       event.stopPropagation();
 			  
       // --------------------Prénom --------------------------
@@ -337,4 +344,4 @@ else {
             
 
           })
-        }  ) */
+        }  ) 
