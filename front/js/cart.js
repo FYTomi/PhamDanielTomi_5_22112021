@@ -186,7 +186,7 @@ else {
 
   
 
-    addEventListener('change', (event) => {
+      addEventListener('change', (event) => {
       event.stopPropagation();
 			  let alert = () => {
           alert ("Veullez remplir ce champs")
@@ -203,7 +203,7 @@ else {
 				if (prenom.match(pattern)) {
 					text.innerHTML = 'le prénom est valide'
 					text.style.color = 'lightgreen'
-					return prenom
+				
         // Si le prénom ne correspond pas aux critères, message d'erreur
 				} else {
 					if (prenom.match(number)) {
@@ -228,7 +228,7 @@ else {
 				if (nom.match(pattern)) {
 					text.innerHTML = 'le nom est valide'
 					text.style.color = 'lightgreen'
-					return nom
+				
         // Si le nom ne correspond pas aux critères, message d'erreur
 				} else {
 					if (nom.match(number)) {
@@ -253,7 +253,7 @@ else {
           if (adresse.match(pattern)) {
             text.innerHTML = 'Adresse est valide'
             text.style.color = 'lightgreen'
-            return adresse
+            
           // Si l'adresse ne correspond pas aux critères, message d'erreur
           } else {
             text.innerHTML = "L'adresse n'est pas valide"
@@ -274,7 +274,7 @@ else {
 				if (ville.match(pattern)) {
 					text.innerHTML = 'La ville est valide'
 					text.style.color = 'lightgreen'
-					return ville
+					
         // Si la ville ne correspond pas aux critères, message d'erreur
 				} else {
 				    text.innerHTML = 'Merci de rentrer un nom de ville valide'
@@ -296,7 +296,7 @@ else {
           if (email.match(pattern)) {
             text.innerHTML = 'le email est valide'
             text.style.color = 'lightgreen'
-            return email
+            
           // Si l'email ne correspond pas aux critères, message d'erreur
           } else {
               text.innerHTML = "L'email n'est pas valide"
@@ -313,47 +313,24 @@ else {
           adresseValide();
           villeValide();
           emailValide();
-
+        
+        }) // Fin change 
 
        // ------------Passage commande ---------------------------
           
-       //Sélection du bouton commander et addeventlsitener
-          let envoyerFormulaire = document.getElementById("order")
-          envoyerFormulaire.addEventListener("click",(c)=>{
-            c.preventDefault();
-            
-            
-            
+       // AddEventListener pour le bouton commander
 
-            //Stocker l'obet dans le localStorage
-            let addClientInfoToLocal = () => {
-              savedClientInfoToLocal = [];
-              savedClientInfoToLocal.push(contact);
-              localStorage.setItem("infoClient", JSON.stringify(clientInfoInLocal))
-            }
-            //Si une des infos du formulaire n'est pas renseigné, ne pas exécuter le code
-            if (
-              contact.prenom == undefined || contact.nom == undefined || contact.adresse == undefined ||contact.ville == undefined || contact.email ==undefined )
-              {
-                alert();
-                return false
-              } else {
-                if (!clientInfoInLocal) {
-                  addClientInfoToLocal();
-                }
-              }
-              
-
-             
-
-              
-
-          })
-        }) // Fin change
-
-        let btn_order= document.getElementById("order")
+         let btn_order= document.getElementById("order")
         btn_order.addEventListener("click", (event)=> {
+          //event.preventDefault();
           
+          //Regex 
+          let regName = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
+          let regAddress = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
+          let regMail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          
+
+          //Création objet contact
           let contact = {
             firstName: document.getElementById('firstName').value,
             lastName: document.getElementById('lastName').value,
@@ -361,11 +338,9 @@ else {
             city: document.getElementById('city').value,
             email: document.getElementById('email').value,
           }
-          if (contact.firstName == null || contact.lastName == null || contact.address == null || contact.city == null || contact.email == null) {
-            alert("test");
-          }
+          
 
-         // On cherche a envoyer deux objets : contact et le tableau de commande
+         // On cherche a envoyer deux objets : contact et le tableau de commande délcaré en début de page
          let elementsToSend = {products, contact}
           
          var myHeaders = new Headers();
@@ -385,7 +360,18 @@ else {
            .then(result => {
              result.orderId
              console.log(result.orderId) 
-             window.location.href='confirmation.html'+ "?id=" + result._id
+             
+             
+             // L'utilisateur est dirigé vers la page de confirmation après vérification du formulaire formulaire si un tableau de commande est bien présent
+             if ((contact.firstName).match(regName) && (contact.lastName).match(regName) && (contact.address).match(regAddress) && (contact.city).match(regAddress) && (contact.email).match(regMail) && products) {
+              console.log("ok");
+              window.location.href='confirmation.html'+ "?id=" + order._id
+            } else {
+              alert("Veuillez remplir correctement les champs ou ajouter des articles")
+              
+            }
+             
+             
              //sélection dans le DOM du numéro de commande à afficher
              let idToshow = document.getElementById("orderId")
              idToshow.innerHTML= result.orderId
@@ -398,4 +384,4 @@ else {
          //Nous redirige vers la page confirmation une fois la commande validé
          
 
-        })
+        }) 
