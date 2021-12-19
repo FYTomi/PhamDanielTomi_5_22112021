@@ -157,14 +157,20 @@ else {
 
   //Gestion des boutons pour modifier la quantités
     
+  let modifyQuantity = () => {
     //Sélection des champs de valeurs
-
     let modifyQuantityButton = document.querySelectorAll(".itemQuantity");
     console.log(modifyQuantityButton);
-      
+      modifyQuantityButton.addEventListener('change', () =>{
+        for (q in productInLocal)
+        if (productInLocal[k].quantity = modifyQuantityButton[k].value) {
+          localStorage.setItem ("produit", JSON.stringify(productInLocal))
+        }
+      })
 
 
-
+  }
+  modifyQuantity();//fin modifyQuantity
     })//fin fetch
 
 
@@ -182,7 +188,9 @@ else {
 
     addEventListener('change', (event) => {
       event.stopPropagation();
-			  
+			  let alert = () => {
+          alert ("Veullez remplir ce champs")
+        }
       // --------------------Prénom --------------------------
       function prenomValide() {
 				let prenom = document.getElementById('firstName').value
@@ -314,13 +322,8 @@ else {
           envoyerFormulaire.addEventListener("click",(c)=>{
             c.preventDefault();
             
-            let contact = {
-              prenom: prenomValide(),
-              nom: nomValide(),
-              adresse: adresseValide(),
-              ville: villeValide(),
-              email: emailValide(),
-            }
+            
+            
 
             //Stocker l'obet dans le localStorage
             let addClientInfoToLocal = () => {
@@ -332,16 +335,67 @@ else {
             if (
               contact.prenom == undefined || contact.nom == undefined || contact.adresse == undefined ||contact.ville == undefined || contact.email ==undefined )
               {
+                alert();
                 return false
               } else {
                 if (!clientInfoInLocal) {
                   addClientInfoToLocal();
                 }
               }
-              // On cherche a envoyer deux objets : contact et le tableau de commande
-              let elementsToSend = {products, contact}
+              
 
-            
+             
+
+              
 
           })
-        }  ) 
+        }) // Fin change
+
+        let btn_order= document.getElementById("order")
+        btn_order.addEventListener("click", (event)=> {
+          
+          let contact = {
+            firstName: document.getElementById('firstName').value,
+            lastName: document.getElementById('lastName').value,
+            address:  document.getElementById('address').value,
+            city: document.getElementById('city').value,
+            email: document.getElementById('email').value,
+          }
+          if (contact.firstName == null || contact.lastName == null || contact.address == null || contact.city == null || contact.email == null) {
+            alert("test");
+          }
+
+         // On cherche a envoyer deux objets : contact et le tableau de commande
+         let elementsToSend = {products, contact}
+          
+         var myHeaders = new Headers();
+         myHeaders.append("Content-Type", "application/json");
+         
+         var raw = JSON.stringify(elementsToSend);
+         
+         var requestOptions = {
+           method: 'POST',
+           headers: myHeaders,
+           body: raw,
+           redirect: 'follow'
+         };
+         
+         fetch("http://localhost:3000/api/products/order", requestOptions)
+           .then(response => response.json())
+           .then(result => {
+             result.orderId
+             console.log(result.orderId) 
+             window.location.href='confirmation.html'+ "?id=" + result._id
+             //sélection dans le DOM du numéro de commande à afficher
+             let idToshow = document.getElementById("orderId")
+             idToshow.innerHTML= result.orderId
+
+            })
+           .catch(error => console.log('error', error));
+
+          
+         
+         //Nous redirige vers la page confirmation une fois la commande validé
+         
+
+        })
