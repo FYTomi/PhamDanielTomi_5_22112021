@@ -1,5 +1,9 @@
-    
-
+let idToshow = new URL (window.location.href).searchParams.get('id')
+if(idToshow){
+//sélection dans le DOM du numéro de commande à afficher
+let idToInsert = document.getElementById("orderId")
+idToInsert.innerHTML= idToshow   
+}
 //On récupére les infos stockées dans le localStorage
 let productInLocal = JSON.parse(localStorage.getItem("produit"));
 let clientInfoInLocal = JSON.parse(localStorage.getItem("infoClient"));
@@ -177,11 +181,133 @@ else {
 
   // -------------------------------------- Fin affichage panier ------------------------------------------------------
 
+  // Déclaration fonctions pour vérifier les champs de remplissage
   
+// -------------------- Ville -------------------------- 
+function villeValide() {
+  let ville = document.getElementById('city').value
+  let text = document.getElementById('cityErrorMsg')
+  // Prends en compte les caractère spéciaux
+  let pattern =
+    /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
+  //Si la ville correspond aux critères imposés, on renvoie le résultat
+  if (ville.match(pattern)) {
+    text.innerHTML = 'La ville est valide'
+    text.style.color = 'lightgreen'
+      return true	
+  // Si la ville ne correspond pas aux critères, message d'erreur
+  } else {
+      text.innerHTML = 'Merci de rentrer un nom de ville valide'
+      text.style.color = 'red'
+      if (ville == '') {
+        text.innerHTML = ''
+        }
+      return false
+    }
+  }
 
+  // --------------------Prénom --------------------------
+  function prenomValide() {
+    let prenom = document.getElementById('firstName').value
+    let text = document.getElementById('firstNameErrorMsg')
+    // Prends en compte les caractère spéciaux
+    let pattern =
+      /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
+    let number = /^[a-zA-Z\-1-9]+$/
+    //Si le prénom correspond aux critères imposés, on renvoie le résultat
+    if (prenom.match(pattern)) {
+      text.innerHTML = 'le prénom est valide'
+      text.style.color = 'lightgreen'
+      return true
+    // Si le prénom ne correspond pas aux critères, message d'erreur
+    } else {
+      if (prenom.match(number)) {
+        text.innerHTML = 'Les chiffres ne sont pas tolérés'
+        text.style.color = 'red'
+      } else {
+        text.innerHTML = 'Merci de rentrer un prénom valide'
+        text.style.color = 'red'
+        return false
+      }}
+    if (prenom == '') {
+      text.innerHTML = ''
+      return false
+    }}
 
-  
+  // --------------------Nom -------------------------- 
+  function nomValide() {
+    let nom = document.getElementById('lastName').value
+    let text = document.getElementById('lastNameErrorMsg')
+    // Prends en compte les caractère spéciaux
+    let pattern =
+      /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
+    let number = /^[a-zA-Z\-1-9]+$/
+    //Si le nom correspond aux critères imposés, on renvoie le résultat
+    if (nom.match(pattern)) {
+      text.innerHTML = 'le nom est valide'
+      text.style.color = 'lightgreen'
+    return true
+    // Si le nom ne correspond pas aux critères, message d'erreur
+    } else {
+      if (nom.match(number)) {
+        text.innerHTML = 'Les chiffres ne sont pas tolérés'
+        text.style.color = 'red'
+        return false
+      } else {
+        text.innerHTML = 'Merci de rentrer un nom valide'
+        text.style.color = 'red'
+        if (nom == '') {
+          text.innerHTML = ''
+          return false
+        }
+      }}
+    }
 
+    // -------------------- Adresse -------------------------- 
+
+    function adresseValide() {
+      let adresse = document.getElementById('address').value
+      let text = document.getElementById('addressErrorMsg')
+      // Prends en compte les caractère spéciaux
+      let pattern = /^[a-zA-Z\-1-9 ]+$/
+        
+      //Si l'adresse correspond aux critères imposés, on renvoie le résultat
+      if (adresse.match(pattern)) {
+        text.innerHTML = 'Adresse est valide'
+        text.style.color = 'lightgreen'
+      return true
+      // Si l'adresse ne correspond pas aux critères, message d'erreur
+      } else {
+        text.innerHTML = "L'adresse n'est pas valide"
+        text.style.color = 'red'
+        if (adresse == '') {
+          text.innerHTML = ''
+        }
+        return false
+      }}
+
+      // -------------------- Email -------------------------- 
+
+      function emailValide() {
+        let email = document.getElementById('email').value
+        let text = document.getElementById('emailErrorMsg')
+        // Prends en compte les caractère spéciaux
+        let pattern =/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        
+        //Si l'email correspond aux critères imposés, on renvoie le résultat
+        if (email.match(pattern)) {
+          text.innerHTML = 'le email est valide'
+          text.style.color = 'lightgreen'
+          return true
+        // Si l'email ne correspond pas aux critères, message d'erreur
+        } else {
+            text.innerHTML = "L'email n'est pas valide"
+            text.style.color = 'red'
+            if (email == '') {
+              text.innerHTML = ''
+            }
+            return false
+          }}
             // ------------------ Formulaire à remplir -----------------------------------------
 
   
@@ -191,123 +317,7 @@ else {
 			  let alert = () => {
           alert ("Veullez remplir ce champs")
         }
-      // --------------------Prénom --------------------------
-      function prenomValide() {
-				let prenom = document.getElementById('firstName').value
-				let text = document.getElementById('firstNameErrorMsg')
-				// Prends en compte les caractère spéciaux
-				let pattern =
-					/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
-				let number = /^[a-zA-Z\-1-9]+$/
-        //Si le prénom correspond aux critères imposés, on renvoie le résultat
-				if (prenom.match(pattern)) {
-					text.innerHTML = 'le prénom est valide'
-					text.style.color = 'lightgreen'
-				
-        // Si le prénom ne correspond pas aux critères, message d'erreur
-				} else {
-					if (prenom.match(number)) {
-						text.innerHTML = 'Les chiffres ne sont pas tolérés'
-						text.style.color = 'red'
-					} else {
-						text.innerHTML = 'Merci de rentrer un prénom valide'
-						text.style.color = 'red'
-					}}
-				if (prenom == '') {
-					text.innerHTML = ''
-				}}
-      // --------------------Nom -------------------------- 
-      function nomValide() {
-				let nom = document.getElementById('lastName').value
-				let text = document.getElementById('lastNameErrorMsg')
-				// Prends en compte les caractère spéciaux
-				let pattern =
-					/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
-				let number = /^[a-zA-Z\-1-9]+$/
-        //Si le nom correspond aux critères imposés, on renvoie le résultat
-				if (nom.match(pattern)) {
-					text.innerHTML = 'le nom est valide'
-					text.style.color = 'lightgreen'
-				
-        // Si le nom ne correspond pas aux critères, message d'erreur
-				} else {
-					if (nom.match(number)) {
-						text.innerHTML = 'Les chiffres ne sont pas tolérés'
-						text.style.color = 'red'
-					} else {
-						text.innerHTML = 'Merci de rentrer un nom valide'
-						text.style.color = 'red'
-					}}
-				if (nom == '') {
-					text.innerHTML = ''
-				}}
-        // -------------------- Adresse -------------------------- 
-
-        function adresseValide() {
-          let adresse = document.getElementById('address').value
-          let text = document.getElementById('addressErrorMsg')
-          // Prends en compte les caractère spéciaux
-          let pattern = /^[a-zA-Z\-1-9 ]+$/
-            
-          //Si l'adresse correspond aux critères imposés, on renvoie le résultat
-          if (adresse.match(pattern)) {
-            text.innerHTML = 'Adresse est valide'
-            text.style.color = 'lightgreen'
-            
-          // Si l'adresse ne correspond pas aux critères, message d'erreur
-          } else {
-            text.innerHTML = "L'adresse n'est pas valide"
-						text.style.color = 'red'
-          }
-          if (adresse == '') {
-            text.innerHTML = ''
-          }}
-
-        // -------------------- Ville -------------------------- 
-        function villeValide() {
-        let ville = document.getElementById('city').value
-				let text = document.getElementById('cityErrorMsg')
-				// Prends en compte les caractère spéciaux
-				let pattern =
-					/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
-        //Si la ville correspond aux critères imposés, on renvoie le résultat
-				if (ville.match(pattern)) {
-					text.innerHTML = 'La ville est valide'
-					text.style.color = 'lightgreen'
-					
-        // Si la ville ne correspond pas aux critères, message d'erreur
-				} else {
-				    text.innerHTML = 'Merci de rentrer un nom de ville valide'
-						text.style.color = 'red'
-					}
-				if (ville == '') {
-					text.innerHTML = ''
-				}}
-
-        // -------------------- Email -------------------------- 
-
-        function emailValide() {
-          let email = document.getElementById('email').value
-          let text = document.getElementById('emailErrorMsg')
-          // Prends en compte les caractère spéciaux
-          let pattern =/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          
-          //Si l'email correspond aux critères imposés, on renvoie le résultat
-          if (email.match(pattern)) {
-            text.innerHTML = 'le email est valide'
-            text.style.color = 'lightgreen'
-            
-          // Si l'email ne correspond pas aux critères, message d'erreur
-          } else {
-              text.innerHTML = "L'email n'est pas valide"
-              text.style.color = 'red'
-            } 
-            if (email == '') {
-              text.innerHTML = ''
-            }}
-          
-            
-        // Appels des fonctions dans le formulaire
+          // Appels des fonctions dans le change
           prenomValide();
           nomValide();
           adresseValide();
@@ -321,14 +331,18 @@ else {
        // AddEventListener pour le bouton commander
 
          let btn_order= document.getElementById("order")
-        btn_order.addEventListener("click", (event)=> {
-          //event.preventDefault();
-          
-          //Regex 
-          let regName = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
-          let regAddress = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u
-          let regMail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          
+          btn_order.addEventListener("click", (event)=> {
+          event.preventDefault();
+         
+           // L'utilisateur est dirigé vers la page de confirmation après vérification du formulaire formulaire si un tableau de commande est bien présent
+           if (villeValide() && prenomValide() && nomValide() && adresseValide() && emailValide()) {
+            console.log("ok");
+    
+          } else {
+            alert("Veuillez remplir correctement les champs ou ajouter des articles")
+            return 
+            
+          } 
 
           //Création objet contact
           let contact = {
@@ -360,28 +374,17 @@ else {
            .then(result => {
              result.orderId
              console.log(result.orderId) 
-             
-             
-             // L'utilisateur est dirigé vers la page de confirmation après vérification du formulaire formulaire si un tableau de commande est bien présent
-             if ((contact.firstName).match(regName) && (contact.lastName).match(regName) && (contact.address).match(regAddress) && (contact.city).match(regAddress) && (contact.email).match(regMail) && products) {
-              console.log("ok");
-              window.location.href='confirmation.html'+ "?id=" + order._id
-            } else {
-              alert("Veuillez remplir correctement les champs ou ajouter des articles")
-              
-            }
-             
-             
-             //sélection dans le DOM du numéro de commande à afficher
-             let idToshow = document.getElementById("orderId")
-             idToshow.innerHTML= result.orderId
+             window.location.href='confirmation.html'+ "?id=" + result.orderId
+            
 
             })
            .catch(error => console.log('error', error));
 
-          
+          //Vidage du Local storage une fois le bouton cliqué
+          localStorage.clear();
          
          //Nous redirige vers la page confirmation une fois la commande validé
          
 
         }) 
+        
