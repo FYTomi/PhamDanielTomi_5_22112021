@@ -118,6 +118,7 @@ if (productOptionChoices.quantity == "" || productOptionChoices.colors == "" || 
                 //On additione la quantité du produit choisit avec la quantité du produit récupéré du localStorage
                 
                 productInLocal[f].quantity += parseInt(productOptionChoices.quantity);
+                productInLocal[f].price += productOptionChoices.price;
                 //Renvoi au localStorage
                 localStorage.setItem ("produit", JSON.stringify(productInLocal));
                 ;
