@@ -58,7 +58,7 @@ let quantite = document.getElementById("quantity")
 
 const envoyerPanier = document.getElementById("addToCart");
 envoyerPanier.addEventListener("click", ()=> {
-     
+ 
 //Conversion de la chaîne de caractère en valeur de la quantité et du prix
 let quantiteProduit = parseInt(quantite.value);
 let prixProduit = quantiteProduit * foundProduct.price
@@ -71,7 +71,8 @@ const ajoutProduitLocalStorage = () => {
 
     // Ajout dans le tableau de l'objet avec les valeurs choisi par l'utilisateur
     productInLocal.push(productOptionChoices);
-
+    
+    // ETAPE 1 = récupérer ce qui est dans le localStorage  
     //La transformation en format JSON et l'envoyer dans la key "produit" du localStorage
     localStorage.setItem ("produit", JSON.stringify(productInLocal));
 }
@@ -99,7 +100,7 @@ let productOptionChoices = {
     price: prixProduit,
 }
 
-//Déclaration de la variable "productInLocal" dans laquelle on met les keys et les values dans le localStorage
+//Déclaration de la variable "productInLocal" dans laquelle on récupérer les keys et les values dans le localStorage
 let productInLocal = JSON.parse(localStorage.getItem("produit"));
 
 if (productOptionChoices.quantity == "" || productOptionChoices.colors == "" || productOptionChoices.quantity > 100) {
@@ -107,7 +108,27 @@ if (productOptionChoices.quantity == "" || productOptionChoices.colors == "" || 
 } else {
     //S'il y a déjà des produits enregistré dans le localStorage
     if(productInLocal){
-    ajoutProduitLocalStorage();
+        
+    let productExistInCart = false
+            for (let f in productInLocal) {
+            //Si le produit selectionné a une couleur ET un id identique
+            if ((productOptionChoices.colors == productInLocal[f].colors) && (productOptionChoices._id == productInLocal[f]._id)) {
+                productExistInCart = true
+                
+                //On additione la quantité du produit choisit avec la quantité du produit récupéré du localStorage
+                
+                productInLocal[f].quantity += parseInt(productOptionChoices.quantity);
+                //Renvoi au localStorage
+                localStorage.setItem ("produit", JSON.stringify(productInLocal));
+                ;
+            }
+            
+        } // Fin for
+            
+     if (!productExistInCart){
+        ajoutProduitLocalStorage();
+     }       
+    
     console.log("ok");
     popupConfirmation();
 } else {
@@ -116,24 +137,7 @@ if (productOptionChoices.quantity == "" || productOptionChoices.colors == "" || 
     ajoutProduitLocalStorage();
     console.log(productInLocal);
     popupConfirmation();
-    }
-}
-
-// --------------------------------Si le panier possède un article ayant le même id et couleurs que l'article ajouté
-
-/*if(productInLocal){
     
-    for (let f in productInLocal) {
-    //Si le produit selectionné a une couleur ET un id identique
-    if ((productOptionChoices.colors == productInLocal[f].colors) && (productOptionChoices._id == productInLocal[f]._id)) {
-        //On additione la quantité du produit choisit avec la quantité du produit récupéré du localStorage
-        productInLocal[f].quantity += parseInt(productOptionChoices[f].quantity);
-        //Renvoi au localStorage
-        localStorage.setItem ("produit", JSON.stringify(productInLocal));
-        ;
-    }
-    
-} // Fin for
-    
-    } */ }) //fin addEvent
+        }}
+    }) //fin addEvent
 }); //fin then data
