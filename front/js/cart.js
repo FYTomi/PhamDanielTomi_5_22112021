@@ -122,6 +122,7 @@ else {
         
         sommeQuantite  += objectTotal;
         sommePrix += price;
+        console.log(sommePrix)
       }
       totalPrix.innerHTML= sommePrix
       totalQuantite.innerHTML = sommeQuantite
