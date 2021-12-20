@@ -61,7 +61,7 @@ envoyerPanier.addEventListener("click", ()=> {
  
 //Conversion de la chaîne de caractère en valeur de la quantité et du prix
 let quantiteProduit = parseInt(quantite.value);
-//let prixProduit = quantiteProduit * foundProduct.price
+let prixProduit = quantiteProduit * foundProduct.price
 
     // --------------------- Stocker la récupération des valeurs du formulaire dans le Local storage --------------------------------
 
@@ -97,7 +97,7 @@ let productOptionChoices = {
     colors: colors.value,
     image: foundProduct.imageUrl,
     altImage: foundProduct.altTxt,
-    price: foundProduct.price,
+    price: prixProduit,
 }
 
 //Déclaration de la variable "productInLocal" dans laquelle on récupérer les keys et les values dans le localStorage

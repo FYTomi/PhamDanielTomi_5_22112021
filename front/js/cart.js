@@ -81,7 +81,7 @@ else {
                   <div class="cart__item__content__description">
                     <h2>${productInLocal[k].name}</h2>
                     <p>${productInLocal[k].colors}</p>
-                    <p id="price">${calculPrixProduit + " €"}</p>
+                    <p id="price">${productInLocal[k].price + " €"}</p>
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
@@ -119,9 +119,7 @@ else {
         
         let price = productInLocal[p].price;
         let objectTotal = parseInt(productInLocal[p].quantity);
-        //let priceBloc = document.getElementById("price");
         
-        //priceBloc.innerHTML = price * objectTotal + " €";
         sommeQuantite  += objectTotal;
         sommePrix += price;
       }
@@ -175,7 +173,7 @@ else {
     let modifyQuantityButton = document.querySelectorAll(".itemQuantity");
     console.log(modifyQuantityButton);
     
-    addEventListener("change", ()=> {
+     addEventListener("change", ()=> {
 
       changeQuantity();
       total()
@@ -197,10 +195,10 @@ else {
           }
           else {
             productInLocal[c].quantity = modifyQuantityButton[c].value;
-            productInLocal[c].price = modifyQuantityButton[c].value * foundProduct[c].price;
+            //productInLocal[c].price = productInLocal[c].quantity * foundProduct[c].price;
             localStorage.setItem ("produit", JSON.stringify(productInLocal));
           }}
-        }//fin modifyQuantity
+        }//fin modifyQuantity 
     })//fin fetch
 
 
