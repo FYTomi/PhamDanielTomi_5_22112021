@@ -1,23 +1,25 @@
 
-let idToshow = new URL (window.location.href).searchParams.get('id')
-if(idToshow){
-//sélection dans le DOM du numéro de commande à afficher
-let idToInsert = document.getElementById("orderId")
-idToInsert.innerHTML= idToshow   
-}
+//Déclaration de la variable contenant le numéro de commande à afficher sur la page de confirmation
+  let idToshow = new URL (window.location.href).searchParams.get('id')
+    if(idToshow){
+    //sélection dans le DOM du numéro de commande à afficher
+    let idToInsert = document.getElementById("orderId")
+    idToInsert.innerHTML= idToshow   
+    }
+
 //On récupére les infos stockées dans le localStorage
 let productInLocal = JSON.parse(localStorage.getItem("produit"));
-let clientInfoInLocal = JSON.parse(localStorage.getItem("infoClient"));
 
 
-const ajoutProduitLocalStorage = () => {
+// Fonction ajouter un produit dans le local Storage
+  const ajoutProduitLocalStorage = () => {
 
-  // Ajout dans le tableau de l'objet avec les valeurs choisi par l'utilisateur
-  productInLocal.push(productOptionChoices);
+    // Ajout dans le tableau de l'objet avec les valeurs choisi par l'utilisateur
+    productInLocal.push(productOptionChoices);
 
-  //La transformation en format JSON et l'envoyer dans la key "produit" du localStorage
-  localStorage.setItem ("produit", JSON.stringify(productInLocal));
-}
+    //La transformation en format JSON et l'envoyer dans la key "produit" du localStorage
+    localStorage.setItem ("produit", JSON.stringify(productInLocal));
+  }
 
 //Création du tableau de commande pour le POST pour récupérer l'id de chaque produit de la commande
 let products = [] 
@@ -30,7 +32,7 @@ for (let n in productInLocal) {
   //Sélection dans le DOM du conteneur des articles ajoutés
 let cartContainer = document.getElementById("cart__items")
 
-//Requête API pour le JSON des produits à afficher les infos de chaque produit
+//Requête API pour le JSON des produits à afficher les infos de chaque produits ajoutés
 fetch('http://localhost:3000/api/products/')
         .then((res) => res.json())
         .then ((data) => {
@@ -149,11 +151,12 @@ else {
 
         //Sélection de l'id du produit qui va être supprimer en cliquant sur le bouton supprimer
         let id_productToDelete = productInLocal[d]._id
+        let color_productToDelete = productInLocal[d].colors
         console.log(id_productToDelete);
         console.log("id_productToDelete");
 
-        //Avec la méthode filter je sélectionner les éléments à garder et je supprime l'élément ou le btn suppr a été cliqué
-        productInLocal = productInLocal.filter( element=> element._id !== id_productToDelete);
+        //Avec la méthode filter je sélectionne les éléments à garder et je supprime l'élément où le btn suppr a été cliqué
+        productInLocal = productInLocal.filter( element=> element._id !== id_productToDelete || element.colors !== color_productToDelete);
         
         //on envoie la variable dans le localStorage
         //La transformation en format JSON et l'envoyer dans la key "produit" du localStorage
@@ -171,7 +174,7 @@ else {
     
   
     //Sélection des champs de valeurs
-    let modifyQuantityButton = document.querySelectorAll(".itemQuantity");
+    let modifyQuantityButton = document.querySelectorAll(".itemQuantity"); 
     console.log(modifyQuantityButton);
     
      addEventListener("change", ()=> {
@@ -199,7 +202,7 @@ else {
             //productInLocal[c].price = productInLocal[c].quantity * foundProduct[c].price;
             localStorage.setItem ("produit", JSON.stringify(productInLocal));
           }}
-        }//fin modifyQuantity 
+        }//fin modifyQuantity  */
     })//fin fetch
 
 
