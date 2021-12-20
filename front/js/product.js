@@ -121,6 +121,7 @@ if (productOptionChoices.quantity == "" || productOptionChoices.colors == "" || 
                 productInLocal[f].price += productOptionChoices.price;
                 //Renvoi au localStorage
                 localStorage.setItem ("produit", JSON.stringify(productInLocal));
+                //console.log("Addition")
                 ;
             }
             
