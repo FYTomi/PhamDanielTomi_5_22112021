@@ -184,9 +184,18 @@ else {
     function changeQuantity() {
     
       for (let c in modifyQuantityButton) {
-          if (modifyQuantityButton[c] > 100) {
-            modifyQuantityButton[c] = 100
-          } else {
+        //Renvoi 100 si l'utilisateur tente de dépasser 100 artcles
+          if (modifyQuantityButton[c].value > 100) {
+            modifyQuantityButton[c].value = 100
+          } 
+          //Renvoi 1 si l'utilisateur sélectionne 0 articles
+          if (modifyQuantityButton[c].value == 0) {
+            modifyQuantityButton[c].value = 1
+          } 
+          if (modifyQuantityButton[c].value < 0) {
+            modifyQuantityButton[c].value = 1
+          }
+          else {
             productInLocal[c].quantity = modifyQuantityButton[c].value;
             productInLocal[c].price = modifyQuantityButton[c].value * foundProduct[c].price;
             localStorage.setItem ("produit", JSON.stringify(productInLocal));
