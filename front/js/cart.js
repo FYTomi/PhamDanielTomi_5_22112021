@@ -1,3 +1,4 @@
+
 let idToshow = new URL (window.location.href).searchParams.get('id')
 if(idToshow){
 //sélection dans le DOM du numéro de commande à afficher
@@ -49,7 +50,13 @@ if(productInLocal === null || productInLocal == 0 ) {
                             <h2> Le panier est vide </h2>
                         </div)
                         `;
+      let totalQuantite = document.getElementById("totalQuantity");
+      let totalPrix = document.getElementById("totalPrice")
+      totalQuantite.innerHTML= 0;
+      totalPrix.innerHTML=  0
+
     cartContainer.innerHTML = panierVide;
+
 } 
 //Si le panier n'est pas vide, il faut afficher les produits qui sont DANS le localStorage
 else {
@@ -224,15 +231,16 @@ function villeValide() {
       if (prenom.match(number)) {
         text.innerHTML = 'Les chiffres ne sont pas tolérés'
         text.style.color = 'red'
+        return false
       } else {
         text.innerHTML = 'Merci de rentrer un prénom valide'
         text.style.color = 'red'
-        return false
+        if (prenom == '') {
+          text.innerHTML = ''
+          return false
+        }
       }}
-    if (prenom == '') {
-      text.innerHTML = ''
-      return false
-    }}
+   }
 
   // --------------------Nom -------------------------- 
   function nomValide() {
