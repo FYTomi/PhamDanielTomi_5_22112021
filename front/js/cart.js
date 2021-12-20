@@ -69,7 +69,7 @@ else {
         
         //Calcul du prix , quantité * nombre de produit
         let quantityProduct = productInLocal[k].quantity;
-        let calculPrixProduit = quantityProduct * productInLocal[k].price;
+        let calculPrixProduit = quantityProduct * foundProduct[k].price;
 
         //On utilise la variable pour incrémenter autant de bloc html que de produit
         structureProduitPanier = structureProduitPanier + `
@@ -81,7 +81,7 @@ else {
                   <div class="cart__item__content__description">
                     <h2>${productInLocal[k].name}</h2>
                     <p>${productInLocal[k].colors}</p>
-                    <p id="price">${productInLocal[k].price + " €"}</p>
+                    <p id="price">${calculPrixProduit + " €"}</p>
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
@@ -114,12 +114,14 @@ else {
       let sommePrix = 0;
       //Sélection des blocs contenant le prix des articles de la liste
 
-      let priceBloc = document.getElementById("price");
+      
       for (let p in productInLocal) {
         
         let price = productInLocal[p].price;
         let objectTotal = parseInt(productInLocal[p].quantity);
+        //let priceBloc = document.getElementById("price");
         
+        //priceBloc.innerHTML = price * objectTotal + " €";
         sommeQuantite  += objectTotal;
         sommePrix += price;
       }
@@ -168,20 +170,28 @@ else {
 
   //Gestion des boutons pour modifier la quantités
     
-  let modifyQuantity = () => {
+  
     //Sélection des champs de valeurs
     let modifyQuantityButton = document.querySelectorAll(".itemQuantity");
     console.log(modifyQuantityButton);
-      modifyQuantityButton.addEventListener('change', () =>{
-        for (q in productInLocal)
-        if (productInLocal[k].quantity = modifyQuantityButton[k].value) {
-          localStorage.setItem ("produit", JSON.stringify(productInLocal))
-        }
-      })
+    
+    addEventListener("change", ()=> {
 
-
-  }
-  modifyQuantity();//fin modifyQuantity
+      changeQuantity();
+      total()
+    })
+        
+    function changeQuantity() {
+    
+      for (let c in modifyQuantityButton) {
+          if (modifyQuantityButton[c] > 100) {
+            modifyQuantityButton[c] = 100
+          } else {
+            productInLocal[c].quantity = modifyQuantityButton[c].value;
+            productInLocal[c].price = modifyQuantityButton[c].value * foundProduct[c].price;
+            localStorage.setItem ("produit", JSON.stringify(productInLocal));
+          }}
+        }//fin modifyQuantity
     })//fin fetch
 
 

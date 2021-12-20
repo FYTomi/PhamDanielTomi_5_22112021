@@ -61,7 +61,7 @@ envoyerPanier.addEventListener("click", ()=> {
  
 //Conversion de la chaîne de caractère en valeur de la quantité et du prix
 let quantiteProduit = parseInt(quantite.value);
-let prixProduit = quantiteProduit * foundProduct.price
+//let prixProduit = quantiteProduit * foundProduct.price
 
     // --------------------- Stocker la récupération des valeurs du formulaire dans le Local storage --------------------------------
 
@@ -73,7 +73,7 @@ const ajoutProduitLocalStorage = () => {
     productInLocal.push(productOptionChoices);
     
     // ETAPE 1 = récupérer ce qui est dans le localStorage  
-    //La transformation en format JSON et l'envoyer dans la key "produit" du localStorage
+    //La transformation en format JSON et l'envoyer dans la key "produit" au localStorage
     localStorage.setItem ("produit", JSON.stringify(productInLocal));
 }
 
@@ -97,7 +97,7 @@ let productOptionChoices = {
     colors: colors.value,
     image: foundProduct.imageUrl,
     altImage: foundProduct.altTxt,
-    price: prixProduit,
+    price: foundProduct.price,
 }
 
 //Déclaration de la variable "productInLocal" dans laquelle on récupérer les keys et les values dans le localStorage
