@@ -70,8 +70,8 @@ else {
         console.log("Nombre d'article " +  productInLocal.length);
         
         //Calcul du prix , quantité * nombre de produit
-        let quantityProduct = productInLocal[k].quantity;
-        let calculPrixProduit = quantityProduct * foundProduct[k].price;
+        let quantityProduct = parseInt(productInLocal[k].quantity);
+        let calculPrixProduit = productInLocal[k].price;
 
         //On utilise la variable pour incrémenter autant de bloc html que de produit
         structureProduitPanier = structureProduitPanier + `
@@ -83,7 +83,7 @@ else {
                   <div class="cart__item__content__description">
                     <h2>${productInLocal[k].name}</h2>
                     <p>${productInLocal[k].colors}</p>
-                    <p id="price">${productInLocal[k].price + " €"}</p>
+                    <p id="price">${calculPrixProduit + " €"}</p>
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
@@ -166,6 +166,7 @@ else {
           sommePrix += price;
           console.log(sommePrix)
         }
+        
         totalPrix.innerHTML= sommePrix
         totalQuantite.innerHTML = sommeQuantite
         
