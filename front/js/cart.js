@@ -83,7 +83,7 @@ else {
                   <div class="cart__item__content__description">
                     <h2>${productInLocal[k].name}</h2>
                     <p>${productInLocal[k].colors}</p>
-                    <p id="price">${calculPrixProduit + " €"}</p>
+                    <p id="price">${foundProduct[k].price + " €"}</p>
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
@@ -202,8 +202,10 @@ else {
           else {
             productInLocal[c].quantity = parseInt(modifyQuantityButton[c].value);
             productInLocal[c].price = productInLocal[c].quantity * foundProduct[c].price;
-            localStorage.setItem ("produit", JSON.stringify(productInLocal));
-          }}
+            
+          }
+          
+          localStorage.setItem ("produit", JSON.stringify(productInLocal));}
         }//fin modifyQuantity  */
     })//fin fetch
 
