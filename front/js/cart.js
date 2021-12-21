@@ -106,31 +106,7 @@ else {
         cartContainer.innerHTML= structureProduitPanier;
     }
 
-    //Affichage quantité total et prix total
-
-      //Sélection des éléments dans le DOM pour afficher la quantité/prix total
-    let total = () => {
-      let totalQuantite = document.getElementById("totalQuantity");
-      let totalPrix = document.getElementById("totalPrice")
-      let sommeQuantite = 0;
-      let sommePrix = 0;
-      //Sélection des blocs contenant le prix des articles de la liste
-
-      
-      for (let p in productInLocal) {
-        
-        let price = productInLocal[p].price;
-        let objectTotal = parseInt(productInLocal[p].quantity);
-        
-        sommeQuantite  += objectTotal;
-        sommePrix += price;
-        console.log(sommePrix)
-      }
-      totalPrix.innerHTML= sommePrix
-      totalQuantite.innerHTML = sommeQuantite
-      
-    }
-    total();
+    
 
 }// fin else
 
@@ -169,7 +145,32 @@ else {
         
       })}//Fin addEvent click Bouton supprimer
         
+//Affichage quantité total et prix total
 
+      //Sélection des éléments dans le DOM pour afficher la quantité/prix total
+      let total = () => {
+        let totalQuantite = document.getElementById("totalQuantity");
+        let totalPrix = document.getElementById("totalPrice")
+        let priceContainer = document.getElementById("price")
+        let sommeQuantite = 0;
+        let sommePrix = 0;
+        //Sélection des blocs contenant le prix des articles de la liste
+  
+        
+        for (let p in productInLocal) {
+          
+          let price = productInLocal[p].price;
+          let objectTotal = parseInt(productInLocal[p].quantity);
+          
+          sommeQuantite  += objectTotal;
+          sommePrix += price;
+          console.log(sommePrix)
+        }
+        totalPrix.innerHTML= sommePrix
+        totalQuantite.innerHTML = sommeQuantite
+        
+      }
+      total();
   //Gestion des boutons pour modifier la quantités
     
   
@@ -185,7 +186,7 @@ else {
         
     function changeQuantity() {
     
-      for (let c in modifyQuantityButton) {
+      for (let c in productInLocal) {
         //Renvoi 100 si l'utilisateur tente de dépasser 100 artcles
           if (modifyQuantityButton[c].value > 100) {
             modifyQuantityButton[c].value = 100
@@ -198,8 +199,8 @@ else {
             modifyQuantityButton[c].value = 1
           }
           else {
-            productInLocal[c].quantity = modifyQuantityButton[c].value;
-            //productInLocal[c].price = productInLocal[c].quantity * foundProduct[c].price;
+            productInLocal[c].quantity = parseInt(modifyQuantityButton[c].value);
+            productInLocal[c].price = productInLocal[c].quantity * foundProduct[c].price;
             localStorage.setItem ("produit", JSON.stringify(productInLocal));
           }}
         }//fin modifyQuantity  */
