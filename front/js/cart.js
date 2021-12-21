@@ -83,7 +83,7 @@ else {
                   <div class="cart__item__content__description">
                     <h2>${productInLocal[k].name}</h2>
                     <p>${productInLocal[k].colors}</p>
-                    <p id="price">${foundProduct[k].price + " €"}</p>
+                    <p id="price">${calculPrixProduit + " €"}</p>
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
@@ -112,11 +112,8 @@ else {
 
   //addEvent listener pour les boutons supprimer
 
-
   // Gestion du bouton supprimer l'article
 
-    // Sélection des boutons supprimer et les stocker dans un tableau
-    
     let btn_supprimer = document.querySelectorAll('.deleteItem');
       console.log(btn_supprimer);
       
@@ -128,8 +125,9 @@ else {
         //Sélection de l'id du produit qui va être supprimer en cliquant sur le bouton supprimer
         let id_productToDelete = productInLocal[d]._id
         let color_productToDelete = productInLocal[d].colors
+        console.log("Suppression de l'article ayant l'id ci-dessous")
         console.log(id_productToDelete);
-        console.log("id_productToDelete");
+        
 
         //Avec la méthode filter je sélectionne les éléments à garder et je supprime l'élément où le btn suppr a été cliqué
         productInLocal = productInLocal.filter( element=> element._id !== id_productToDelete || element.colors !== color_productToDelete);
@@ -164,6 +162,7 @@ else {
           
           sommeQuantite  += objectTotal;
           sommePrix += price;
+          console.log("Addition")
           console.log(sommePrix)
         }
         
@@ -402,11 +401,13 @@ function villeValide() {
            redirect: 'follow'
          };
          
+         //Récupération de la réponse sur serveur après le POST, qui contient le numéro de commande
          fetch("http://localhost:3000/api/products/order", requestOptions)
            .then(response => response.json())
            .then(result => {
              result.orderId
              console.log(result.orderId) 
+             //Redirige l'utilisateur sur la page de confirmation
              window.location.href='confirmation.html'+ "?id=" + result.orderId
             
 
